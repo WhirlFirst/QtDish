@@ -5,6 +5,8 @@
 #include "QMessageBox"
 #include "QGridLayout"
 #include <QPushButton>
+#include <uidish.h>
+#include <uitable.h>
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -28,17 +30,27 @@ void MainWindow::on_actionSign_out_triggered()
     QMessageBox::warning(this, tr("thanks"),tr("感谢使用"),QMessageBox::Yes);
     this->close();
 }
-
+int flag=0;
 void MainWindow::on_sTableBtn_clicked()
 {
-   ui->label->deleteLater();
-   QGridLayout *layout = new QGridLayout;
-   QPushButton *table[50];
-   for(int i=0;i<50;i++){
-       table[i]= new QPushButton(this);
-       table[i]->setText(QString::fromStdString(t[i].showNumber()));
+    if(flag==0){
+        ui->label->deleteLater();
+        QGridLayout *layout = ui->gridLayout_2;
+        Uitable *table[30];
+        for(int i=0;i<30;i++){
+            table[i]= new Uitable(this);
+            table[i]->settable(&t[i]);
+            table[i]->settext(t[i].showNumber());
+
+         }
+         int i =0;
+            for(int p=0;p<10;p++){
+                for(int k=0;k<3;k++){
+                    layout->addWidget(table[i],p,k,1,1);
+                    i++;
+                }
+            }
+            flag=1;
     }
-   layout->addWidget(table[0],0,0,1,1);
-   layout->addWidget(table[1],0,1,1,1);
-   ui->centralWidget->setLayout(layout);
+   else;
 }

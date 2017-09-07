@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
     ww.menu.insert(f);
     ww.menu.insert(m);
     ww.menu.insert(h);
-    for(int i=0;i<50;i++){
+    for(int i=0;i<30;i++){
         t[i].init(i);
     }
     QApplication a(argc, argv);

@@ -188,5 +188,5 @@ private:
 
 extern SuperUser ww;
 extern User CurrentUser;
-extern Table t[50];
+extern Table t[30];
 #endif // LOGIC_H

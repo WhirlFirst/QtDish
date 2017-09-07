@@ -352,4 +352,4 @@ int DQueue::size() {
 }
 SuperUser ww;
 User CurrentUser;
-Table t[50];
+Table t[30];

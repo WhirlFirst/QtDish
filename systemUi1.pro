@@ -28,15 +28,24 @@ SOURCES += main.cpp\
     registerdialog.cpp \
     logindialog.cpp \
     showdialog.cpp \
-    logic.cpp
+    logic.cpp \
+    uidish.cpp \
+    uitable.cpp
 
 HEADERS  += mainwindow.h \
     registerdialog.h \
     logindialog.h \
     showdialog.h \
-    logic.h
+    logic.h \
+    uidish.h \
+    uitable.h
 
 FORMS    += mainwindow.ui \
     registerdialog.ui \
     logindialog.ui \
-    showdialog.ui
+    showdialog.ui \
+    uidish.ui \
+    uitable.ui
+
+RESOURCES += \
+    myicon.qrc

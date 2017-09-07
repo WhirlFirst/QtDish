@@ -25,6 +25,9 @@ public:
     friend class SuperUser;
     int showCost();
     string showName();
+    friend class UQueue;
+    string checknumber();
+    string checkpwd();
 private:
     string name;
     string number;
@@ -150,6 +153,7 @@ public:
     void showAllUser();
     void reset(int n=0);
     User showSingle();
+    int size();
 private:
     linkedlist<User> u;
 };
@@ -182,4 +186,5 @@ private:
 
 
 extern SuperUser ww;
+extern User CurrentUser;
 #endif // LOGIC_H

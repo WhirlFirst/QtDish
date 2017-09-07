@@ -1,6 +1,6 @@
 #include "showdialog.h"
 #include "ui_showdialog.h"
-
+#include "mainwindow.h"
 ShowDialog::ShowDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ShowDialog)

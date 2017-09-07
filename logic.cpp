@@ -13,6 +13,13 @@ string User::showName(){
     return name;
 }
 
+string User::checknumber(){
+    return number;
+}
+
+string User::checkpwd(){
+    return pwd;
+}
 
 int Dish::showPrice() {
     return price;
@@ -299,6 +306,11 @@ User UQueue::showSingle() {
 bool UQueue::isEmpty() const {
     return u.isEmpty();
 }
+
+int UQueue::size(){
+    return u.getSize();
+}
+
 void DQueue::insert(Dish item) {
     qu.insertRear(item);
     //item.changeStatus(Onqueue);
@@ -334,3 +346,4 @@ int DQueue::size() {
     return qu.getSize();
 }
 SuperUser ww;
+User CurrentUser;

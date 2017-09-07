@@ -15,6 +15,9 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     void fresh();
+private slots:
+    void on_actionSign_out_triggered();
+
 private:
     Ui::MainWindow *ui;
 };

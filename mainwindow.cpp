@@ -2,7 +2,7 @@
 #include "ui_mainwindow.h"
 #include "logic.h"
 #include "QString"
-
+#include "QMessageBox"
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -13,10 +13,16 @@ MainWindow::MainWindow(QWidget *parent) :
 }
 
 void MainWindow::fresh(){
-    if(!ww.u.isEmpty()) ui->label->setText(QString::fromStdString(ww.u.showSingle().showName()));
+     ui->Userlabel->setText(QString::fromStdString(CurrentUser.showName()));
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::on_actionSign_out_triggered()
+{
+    QMessageBox::warning(this, tr("thanks"),tr("感谢使用"),QMessageBox::Yes);
+    this->close();
 }

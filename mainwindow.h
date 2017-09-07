@@ -18,6 +18,8 @@ public:
 private slots:
     void on_actionSign_out_triggered();
 
+    void on_sTableBtn_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

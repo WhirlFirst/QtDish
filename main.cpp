@@ -6,8 +6,16 @@
 #include "QDebug"
 int main(int argc, char *argv[])
 {
-    Dish d(0,"french");
-
+    Dish d(1010,"french");
+    Dish fp(10,"chips");
+    Dish f(150,"chicken");
+    Dish m(6,"ice cream");
+    Dish h(20,"humberger");
+    ww.menu.insert(d);
+    ww.menu.insert(fp);
+    ww.menu.insert(f);
+    ww.menu.insert(m);
+    ww.menu.insert(h);
     QApplication a(argc, argv);
     User p("rr","18811125508","123");
     ww.u.insert(p);

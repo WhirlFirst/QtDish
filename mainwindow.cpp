@@ -26,3 +26,8 @@ void MainWindow::on_actionSign_out_triggered()
     QMessageBox::warning(this, tr("thanks"),tr("感谢使用"),QMessageBox::Yes);
     this->close();
 }
+
+void MainWindow::on_sTableBtn_clicked()
+{
+   ui->label->deleteLater();
+}

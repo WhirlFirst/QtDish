@@ -16,6 +16,9 @@ int main(int argc, char *argv[])
     ww.menu.insert(f);
     ww.menu.insert(m);
     ww.menu.insert(h);
+    for(int i=0;i<50;i++){
+        t[i].init(i);
+    }
     QApplication a(argc, argv);
     User p("rr","18811125508","123");
     ww.u.insert(p);

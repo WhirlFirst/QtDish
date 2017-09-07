@@ -278,6 +278,11 @@ void Table::deleteDish(Dish item) {
 void Table::rateing() {
     showAllDish();
 }
+
+string Table::showNumber(){
+    return to_string(Number);
+}
+
 TableStatus Table::showStatus() {
     return t ;
 }
@@ -347,3 +352,4 @@ int DQueue::size() {
 }
 SuperUser ww;
 User CurrentUser;
+Table t[50];

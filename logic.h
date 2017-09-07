@@ -168,6 +168,7 @@ public:
     void addDish(Dish item);
     void deleteDish(Dish item);
     void rateing();
+    string showNumber();
     TableStatus showStatus();
 private:
     User *u;
@@ -187,4 +188,5 @@ private:
 
 extern SuperUser ww;
 extern User CurrentUser;
+extern Table t[50];
 #endif // LOGIC_H

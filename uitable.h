@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include "logic.h"
+#include "signal.h"
 namespace Ui {
 class Uitable;
 }
@@ -16,12 +17,14 @@ public:
     ~Uitable();
     void settable(Table* temp);
     void settext(string ss);
-
+    void disable();
+    Table* tp;
+signals:
+    void select();
 private slots:
     void on_pushButton_clicked();
 private:
     Ui::Uitable *ui;
-    Table* tp;
 };
 
 #endif // UITABLE_H

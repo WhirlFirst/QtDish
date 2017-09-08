@@ -38,8 +38,8 @@ void LoginDialog::on_loginBtn_clicked()
     ww.u.reset();
     int k=0;
     for(int i =0;i<ww.u.size();i++){
-        User tem = ww.u.showSingle();
-        if(tem.showName() == name&&tem.checkpwd() == pwd){
+        User* tem = ww.u.showSingle();
+        if(tem->showName() == name&&tem->checkpwd() == pwd){
             CurrentUser = tem;
            k++;
         }

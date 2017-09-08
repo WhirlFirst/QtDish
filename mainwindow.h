@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-
+#include <uitable.h>
 namespace Ui {
 class MainWindow;
 }
@@ -20,8 +20,11 @@ private slots:
 
     void on_sTableBtn_clicked();
 
+    void on_sDishBtn_clicked();
+    void tablefresh();
 private:
     Ui::MainWindow *ui;
+    Uitable *utable[30];
 };
 
 #endif // MAINWINDOW_H

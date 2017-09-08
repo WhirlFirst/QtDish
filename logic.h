@@ -95,7 +95,7 @@ public:
     int searchDish(string DishName);
     T* deletedata(string DishName);
     void Show();
-    T ShowSingle(); //从头开始显示data，每显示一个后再把当前指针向后移动一位
+    T* ShowSingle(); //从头开始显示data，每显示一个后再把当前指针向后移动一位
 private:
     node<T>* front,*rear;
     node<T>* prevPtr,*currPtr;
@@ -133,7 +133,7 @@ public:
     bool isEmpty() const ;
     int searchDish(string name);
     void showAllDish();
-    Dish showSingle();
+    Dish* showSingle();
     void reset(int n=0);
     void determine();
     int size();
@@ -152,7 +152,7 @@ public:
     int searchUser(string name);
     void showAllUser();
     void reset(int n=0);
-    User showSingle();
+    User* showSingle();
     int size();
 private:
     linkedlist<User> u;
@@ -185,8 +185,8 @@ public:
 private:
 };
 
-
 extern SuperUser ww;
-extern User CurrentUser;
+extern User* CurrentUser;
 extern Table t[30];
+extern Table* CurrentTable;
 #endif // LOGIC_H

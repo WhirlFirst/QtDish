@@ -253,10 +253,10 @@ void linkedlist<T>::determine(){
 
 
 template <class T>
-T linkedlist<T>::ShowSingle() {
+T* linkedlist<T>::ShowSingle() {
     prevPtr = currPtr;
     currPtr = currPtr->nextNode();
-    return prevPtr->data;
+    return &(prevPtr->data);
 }
 
 void Table::addDish(Dish item) {
@@ -303,7 +303,7 @@ void UQueue::reset(int n) {
     u.reset(n);
 }
 
-User UQueue::showSingle() {
+User* UQueue::showSingle() {
     return u.ShowSingle();
 }
 
@@ -343,7 +343,7 @@ void DQueue::reset(int n) {
     qu.reset(n);
 }
 
-Dish DQueue::showSingle() {
+Dish* DQueue::showSingle() {
     return qu.ShowSingle();
 }
 
@@ -351,5 +351,6 @@ int DQueue::size() {
     return qu.getSize();
 }
 SuperUser ww;
-User CurrentUser;
+User* CurrentUser;
 Table t[30];
+Table* CurrentTable;

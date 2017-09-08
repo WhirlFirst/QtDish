@@ -17,8 +17,8 @@ RegisterDialog::~RegisterDialog()
 
 void RegisterDialog::on_RegisterBtn_clicked()
 {
-    User p(ui->userlineEdit->text().toStdString(),ui->phonelineEdit->text().toStdString(),ui->pwdlineEdit->text().toStdString());
-    CurrentUser = p;
-    ww.u.insert(CurrentUser);
+   User* t =  new User(ui->userlineEdit->text().toStdString(),ui->phonelineEdit->text().toStdString(),ui->pwdlineEdit->text().toStdString());
+    CurrentUser = t;
+    ww.u.insert(*CurrentUser);
     accept();
 }

@@ -6,7 +6,7 @@
 #include "QDebug"
 int main(int argc, char *argv[])
 {
-    Dish d(1010,"french");
+    Dish d(1010,"abalone");
     Dish fp(10,"chips");
     Dish f(150,"chicken");
     Dish m(6,"ice cream");
@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
         t[i].init(i);
     }
     QApplication a(argc, argv);
-    User p("rr","18811125508","123");
+    User p("lulu","18811125508","123");
     ww.u.insert(p);
     LoginDialog ldl;
     MainWindow w;

@@ -104,12 +104,25 @@
     <property name="geometry">
      <rect>
       <x>190</x>
-      <y>40</y>
+      <y>30</y>
       <width>751</width>
-      <height>591</height>
+      <height>561</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_2"/>
+   </widget>
+   <widget class="QLabel" name="moneylabel">
+    <property name="geometry">
+     <rect>
+      <x>660</x>
+      <y>10</y>
+      <width>111</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>总计：0元</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">

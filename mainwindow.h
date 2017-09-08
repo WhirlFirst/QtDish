@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <uitable.h>
+#include <uidish.h>
 namespace Ui {
 class MainWindow;
 }
@@ -22,9 +23,11 @@ private slots:
 
     void on_sDishBtn_clicked();
     void tablefresh();
+    void moneyfresh();
 private:
     Ui::MainWindow *ui;
     Uitable *utable[30];
+    UiDish *udish[9];
 };
 
 #endif // MAINWINDOW_H

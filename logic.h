@@ -160,6 +160,8 @@ private:
 
 
 enum TableStatus{Empty,Full};
+
+
 class Table: public DQueue{
 public:
     Table(int number = 0,TableStatus r=Empty):t(r),Number(number),u(NULL){};

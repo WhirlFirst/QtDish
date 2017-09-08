@@ -23,13 +23,13 @@
     </rect>
    </property>
    <property name="text">
-    <string>TextLabel</string>
+    <string>暂无图片</string>
    </property>
   </widget>
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>
-     <x>70</x>
+     <x>140</x>
      <y>160</y>
      <width>93</width>
      <height>28</height>
@@ -37,6 +37,19 @@
    </property>
    <property name="text">
     <string>PushButton</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="costlabel">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>160</y>
+     <width>60</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>TextLabel</string>
    </property>
   </widget>
  </widget>

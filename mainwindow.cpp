@@ -19,6 +19,13 @@ void MainWindow::fresh(){
      ui->Userlabel->setText(QString::fromStdString(CurrentUser->showName()));
 }
 
+void MainWindow::moneyfresh(){
+    QString p("总计：");
+    p.append(QString::number(CurrentUser->showCost()));
+    p.append("元");
+    ui->moneylabel->setText(p);
+}
+
 MainWindow::~MainWindow()
 {
     delete ui;
@@ -54,6 +61,7 @@ void MainWindow::on_sTableBtn_clicked()
 
          }
          int i =0;
+         tablefresh();
             for(int p=0;p<10;p++){
                 for(int k=0;k<3;k++){
                     layout->addWidget(utable[i],p,k,1,1);
@@ -62,29 +70,36 @@ void MainWindow::on_sTableBtn_clicked()
             }
             flag=1;
     }
-    if(flag==2){
-        int i=0;
-        tablefresh();
-        for(int p=0;p<10;p++){
-            for(int k=0;k<3;k++){
-                utable[i]->show();
-                i++;
-            }
-        }
-        flag=1;
-    }
    else tablefresh();
 }
 
 
 void MainWindow::on_sDishBtn_clicked()
 {
-    int i=0;
-    for(int p=0;p<10;p++){
-        for(int k=0;k<3;k++){
-            utable[i]->hide();
-            i++;
-        }
+    QGridLayout *layout = ui->gridLayout_2;
+    for(int i=0;i<30;i++){
+        layout->removeWidget(utable[i]);
+    utable[i]->deleteLater();
     }
-    flag =2;
+    flag =0;
+    ww.menu.reset();
+    for(int i=0;i<9;i++){
+        udish[i]= new UiDish(this);
+        udish[i]->btninit();
+     }
+    for(int p=0;p<ww.menu.size();p++){
+        Dish* temp =ww.menu.showSingle();
+        udish[p]->setDish(temp);
+        udish[p]->setlabel(temp->showName());
+        udish[p]->setprice(temp->showPrice());
+        udish[p]->setBtnabled(true);
+        connect(udish[p],SIGNAL(addnewdish()),this,SLOT(moneyfresh()));
+    }
+    int x =0;
+       for(int p=0;p<3;p++){
+           for(int k=0;k<3;k++){
+               layout->addWidget(udish[x],p,k,1,1);
+               x++;
+           }
+       }
 }

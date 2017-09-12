@@ -29,6 +29,8 @@ private slots:
     void frontpagedish();
     void createnextbtn();
     void createfrontbtn();
+    void on_PayBtn_clicked();
+
 private:
     Ui::MainWindow *ui;
     Uitable *utable[30];

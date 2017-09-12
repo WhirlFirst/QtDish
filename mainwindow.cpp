@@ -8,6 +8,8 @@
 #include <uidish.h>
 #include <uitable.h>
 #include <QDebug>
+#include <paydialog.h>
+#include <waitdialog.h>
 int fl=0;
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -195,3 +197,15 @@ void MainWindow::on_sDishBtn_clicked()
     }
 }
 
+
+void MainWindow::on_PayBtn_clicked()
+{
+    PayDialog pa;
+    if(pa.exec() ==QDialog::Accepted){
+        this->hide();
+        WaitDialog w;
+        if(w.exec() == QDialog::Accepted){
+            this->close();
+        }
+    }
+}

@@ -14,8 +14,24 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
 }
+
+void MainWindow::createnextbtn(){
+    next = new QPushButton(this);
+    next->setGeometry(440,650,93,28);
+    next->setText(tr("下一页"));
+    connect(next,SIGNAL(clicked()),this,SLOT(nextpagedish()));
+    next->show();
+}
+
+void MainWindow::createfrontbtn(){
+    front = new QPushButton(tr("上一页"),this);
+    front->setGeometry(340,650,93,28);
+    connect(front,SIGNAL(clicked(bool)),this,SLOT(frontpagedish()));
+    front->setEnabled(false);
+    front->show();
+}
+
 
 void MainWindow::fresh(){
      ui->Userlabel->setText(QString::fromStdString(CurrentUser->showName()));
@@ -47,7 +63,7 @@ void MainWindow::tablefresh(){
             utable[i]->disable();
         }
     }
-    flag =1;
+    flag =2;
 }
 
 
@@ -70,7 +86,33 @@ void MainWindow::on_sTableBtn_clicked()
                     i++;
                 }
             }
-            flag=1;
+            flag=2;
+    }
+    else if(flag==1||flag==4){
+        QGridLayout *layout = ui->gridLayout_2;
+        front->deleteLater();
+        next->deleteLater();
+        for(int i=0;i<9;i++){
+            udish[i]->hide();
+            layout->removeWidget(udish[i]);
+            udish[i]->deleteLater();
+         }
+        for(int i=0;i<30;i++){
+            utable[i]= new Uitable(this);
+            utable[i]->settable(&t[i]);
+            utable[i]->settext(t[i].showNumber());
+            connect(utable[i],SIGNAL(select()),this,SLOT(tablefresh()));
+
+         }
+        tablefresh();
+        int y=0;
+        for(int p=0;p<10;p++){
+            for(int k=0;k<3;k++){
+                layout->addWidget(utable[y],p,k,1,1);
+                y++;
+            }
+        }
+        flag =3;
     }
    else tablefresh();
 }
@@ -90,16 +132,18 @@ void MainWindow::nextpagedish(){
         udish[s]->setlabel(temp->showName());
         udish[s]->setprice(temp->showPrice());
         udish[s]->setBtnabled(true);
-        connect(udish[s],SIGNAL(addnewdish()),this,SLOT(moneyfresh()));
+        connect(udish[s],SIGNAL(newdish()),this,SLOT(moneyfresh()));
         s++;
     }
     front->setEnabled(true);
-
 }
 
 void MainWindow::frontpagedish(){
     fl--;
     if(fl==0) front->setEnabled(false);
+    for(int d = 0;d<9;d++){
+        udish[d]->btninit();
+    }
     ww.menu.reset(fl*9);
     int s=0;
     for(int p=0+fl*9;p<ww.menu.size()&&p<(9+fl*9);p++){
@@ -108,7 +152,7 @@ void MainWindow::frontpagedish(){
         udish[s]->setlabel(temp->showName());
         udish[s]->setprice(temp->showPrice());
         udish[s]->setBtnabled(true);
-        connect(udish[s],SIGNAL(addnewdish()),this,SLOT(moneyfresh()));
+        connect(udish[s],SIGNAL(newdish()),this,SLOT(moneyfresh()));
         s++;
     }
     next->setEnabled(true);
@@ -116,40 +160,38 @@ void MainWindow::frontpagedish(){
 
 void MainWindow::on_sDishBtn_clicked()
 {
-    QGridLayout *layout = ui->gridLayout_2;
-    for(int i=0;i<30;i++){
-        layout->removeWidget(utable[i]);
-    utable[i]->deleteLater();
-    }
-    flag =0;
-    ww.menu.reset();
-    for(int i=0;i<9;i++){
-        udish[i]= new UiDish(this);
-        udish[i]->btninit();
-     }
-    for(int p=0;p<ww.menu.size()&&p<9;p++){
-        Dish* temp =ww.menu.showSingle();
-        udish[p]->setDish(temp);
-        udish[p]->setlabel(temp->showName());
-        udish[p]->setprice(temp->showPrice());
-        udish[p]->setBtnabled(true);
-        connect(udish[p],SIGNAL(addnewdish()),this,SLOT(moneyfresh()));
-    }
-    int x =0;
-       for(int p=0;p<3;p++){
-           for(int k=0;k<3;k++){
-               layout->addWidget(udish[x],p,k,1,1);
-               x++;
+    if(CurrentTable== 0) QMessageBox::warning(this, tr("哎呀"),tr("请先选桌"),QMessageBox::Yes);
+    if(flag==4) ;
+    else{
+        QGridLayout *layout = ui->gridLayout_2;
+        for(int i=0;i<30;i++){
+            layout->removeWidget(utable[i]);
+        utable[i]->deleteLater();
+        }
+        flag =1;
+        ww.menu.reset();
+        for(int i=0;i<9;i++){
+            udish[i]= new UiDish(this);
+            udish[i]->btninit();
+         }
+        for(int p=0;p<ww.menu.size()&&p<9;p++){
+            Dish* temp =ww.menu.showSingle();
+            udish[p]->setDish(temp);
+            udish[p]->setlabel(temp->showName());
+            udish[p]->setprice(temp->showPrice());
+            udish[p]->setBtnabled(true);
+            connect(udish[p],SIGNAL(newdish()),this,SLOT(moneyfresh()));
+        }
+        int x =0;
+           for(int p=0;p<3;p++){
+               for(int k=0;k<3;k++){
+                   layout->addWidget(udish[x],p,k,1,1);
+                   x++;
+               }
            }
-       }
-    next = new QPushButton(this);
-    next->setGeometry(440,650,93,28);
-    next->setText(tr("下一页"));
-    connect(next,SIGNAL(clicked()),this,SLOT(nextpagedish()));
-    next->show();
-    front = new QPushButton(tr("上一页"),this);
-    front->setGeometry(340,650,93,28);
-    connect(front,SIGNAL(clicked(bool)),this,SLOT(frontpagedish()));
-    front->setEnabled(false);
-    front->show();
+        createnextbtn();
+        createfrontbtn();
+        flag=4;
+    }
 }
+

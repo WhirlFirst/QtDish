@@ -10,6 +10,7 @@ UiDish::UiDish(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->pushButton->setText(tr("想吃🤤"));
+    ui->cancelButton->setEnabled(false);
 }
 
 UiDish::~UiDish()
@@ -19,13 +20,18 @@ UiDish::~UiDish()
 
 void UiDish::setDish(Dish *dp){
     d=dp;
+    number = CurrentTable->searchDish(dp->showName());
+    ui->numberlabel->setText(QString::number(number).append("份"));
+    if(number!=0) ui->cancelButton->setEnabled(true);
 }
 
 void UiDish::on_pushButton_clicked()
 {
-    qDebug()<<QString::fromStdString(CurrentTable->showNumber())<<endl;
     CurrentTable->addDish(*d);
-    emit addnewdish();
+    number++;
+    ui->numberlabel->setText(QString::number(number).append("份"));
+    emit newdish();
+    ui->cancelButton->setEnabled(true);
 }
 
 void UiDish::setlabel(string n){
@@ -44,4 +50,14 @@ void UiDish::btninit(){
     ui->pushButton->setEnabled(false);
     ui->costlabel->setText(tr("0元"));
     ui->label->setText("暂无图片");
+    ui->cancelButton->setEnabled(false);
+}
+
+void UiDish::on_cancelButton_clicked()
+{
+    CurrentTable->deleteDish(*d);
+    number--;
+    ui->numberlabel->setText(QString::number(number).append("份"));
+    if(number == 0) ui->cancelButton->setEnabled(false);
+    emit newdish();
 }

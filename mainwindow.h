@@ -27,6 +27,8 @@ private slots:
     void moneyfresh();
     void nextpagedish();
     void frontpagedish();
+    void createnextbtn();
+    void createfrontbtn();
 private:
     Ui::MainWindow *ui;
     Uitable *utable[30];

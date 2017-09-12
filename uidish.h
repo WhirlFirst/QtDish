@@ -22,13 +22,16 @@ public:
     void setBtnabled(bool p= false);
     void btninit();
 signals:
-    void addnewdish();
+    void newdish();
 private slots:
     void on_pushButton_clicked();
+
+    void on_cancelButton_clicked();
 
 private:
     Ui::UiDish *ui;
     Dish* d;
+    int number;
 };
 
 #endif // UIDISH_H

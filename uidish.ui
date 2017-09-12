@@ -16,34 +16,21 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>0</y>
-     <width>171</width>
-     <height>141</height>
+     <x>20</x>
+     <y>10</y>
+     <width>131</width>
+     <height>71</height>
     </rect>
    </property>
    <property name="text">
     <string>暂无图片</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton">
-   <property name="geometry">
-    <rect>
-     <x>130</x>
-     <y>150</y>
-     <width>93</width>
-     <height>28</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>PushButton</string>
-   </property>
-  </widget>
   <widget class="QLabel" name="costlabel">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>160</y>
+     <x>140</x>
+     <y>100</y>
      <width>81</width>
      <height>16</height>
     </rect>
@@ -51,6 +38,52 @@
    <property name="text">
     <string>TextLabel</string>
    </property>
+  </widget>
+  <widget class="QSplitter" name="splitter">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>120</y>
+     <width>93</width>
+     <height>56</height>
+    </rect>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Vertical</enum>
+   </property>
+   <widget class="QPushButton" name="pushButton">
+    <property name="text">
+     <string>PushButton</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="cancelButton">
+    <property name="text">
+     <string>不要了</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QSplitter" name="splitter_2">
+   <property name="geometry">
+    <rect>
+     <x>140</x>
+     <y>150</y>
+     <width>68</width>
+     <height>15</height>
+    </rect>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+   <widget class="QLabel" name="textlabel">
+    <property name="text">
+     <string>已点：</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="numberlabel">
+    <property name="text">
+     <string>0份</string>
+    </property>
+   </widget>
   </widget>
  </widget>
  <resources/>

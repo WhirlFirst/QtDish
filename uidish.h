@@ -21,6 +21,7 @@ public:
     void setDish(Dish* dp);
     void setBtnabled(bool p= false);
     void btninit();
+    Dish* d;
 signals:
     void newdish();
 private slots:
@@ -30,7 +31,7 @@ private slots:
 
 private:
     Ui::UiDish *ui;
-    Dish* d;
+
     int number;
 };
 

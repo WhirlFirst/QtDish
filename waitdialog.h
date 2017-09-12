@@ -2,7 +2,7 @@
 #define WAITDIALOG_H
 
 #include <QDialog>
-
+#include <uratingdish.h>
 namespace Ui {
 class WaitDialog;
 }
@@ -20,6 +20,7 @@ private slots:
 
 private:
     Ui::WaitDialog *ui;
+    URatingDish* urdish[8];
 };
 
 #endif // WAITDIALOG_H

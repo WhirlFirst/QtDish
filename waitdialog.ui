@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>819</width>
-    <height>631</height>
+    <width>967</width>
+    <height>699</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -63,8 +63,8 @@
     <rect>
      <x>30</x>
      <y>120</y>
-     <width>761</width>
-     <height>441</height>
+     <width>931</width>
+     <height>541</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="DishgridLayout"/>
@@ -72,8 +72,8 @@
   <widget class="QPushButton" name="exitbtn">
    <property name="geometry">
     <rect>
-     <x>360</x>
-     <y>570</y>
+     <x>460</x>
+     <y>660</y>
      <width>93</width>
      <height>28</height>
     </rect>

@@ -122,6 +122,7 @@ void MainWindow::on_sTableBtn_clicked()
 
 void MainWindow::nextpagedish(){
     fl++;
+    QGridLayout *layout = ui->gridLayout_2;
     if(ww.menu.size()<(fl+1)*9) next->setEnabled(false);
     for(int d = 0;d<9;d++){
         udish[d]->btninit();
@@ -137,11 +138,20 @@ void MainWindow::nextpagedish(){
         connect(udish[s],SIGNAL(newdish()),this,SLOT(moneyfresh()));
         s++;
     }
+    int x =0;
+       for(int p=0;p<3;p++){
+           for(int k=0;k<3;k++){
+               if(udish[x]->d != 0) layout->addWidget(udish[x],p,k,1,1);
+               else udish[x]->hide();
+               x++;
+           }
+       }
     front->setEnabled(true);
 }
 
 void MainWindow::frontpagedish(){
     fl--;
+    QGridLayout *layout = ui->gridLayout_2;
     if(fl==0) front->setEnabled(false);
     for(int d = 0;d<9;d++){
         udish[d]->btninit();
@@ -157,6 +167,14 @@ void MainWindow::frontpagedish(){
         connect(udish[s],SIGNAL(newdish()),this,SLOT(moneyfresh()));
         s++;
     }
+    int x =0;
+       for(int p=0;p<3;p++){
+           for(int k=0;k<3;k++){
+               if(udish[x]->d != 0) udish[x]->show();
+               else udish[x]->hide();
+               x++;
+           }
+       }
     next->setEnabled(true);
 }
 
@@ -187,7 +205,8 @@ void MainWindow::on_sDishBtn_clicked()
         int x =0;
            for(int p=0;p<3;p++){
                for(int k=0;k<3;k++){
-                   layout->addWidget(udish[x],p,k,1,1);
+                   if(udish[x]->d != 0) layout->addWidget(udish[x],p,k,1,1);
+                   else udish[x]->hide();
                    x++;
                }
            }

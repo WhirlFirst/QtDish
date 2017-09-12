@@ -61,6 +61,10 @@ int Dish::Evaluation(int sc){
     return score;
 }
 
+int Dish::showScore(){
+    return score;
+}
+
 
 template <class T>
 node<T>::node(T d,node<T>* next):next(next),data(d)

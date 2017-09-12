@@ -44,6 +44,7 @@ public:
     string showName() const;
     int Evaluation(int sc); //评价菜品并返回评价完后平均分
     int showPrice();
+    int showScore();
 private:
     Status sta;
     string DishName;

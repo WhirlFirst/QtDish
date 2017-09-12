@@ -32,7 +32,8 @@ SOURCES += main.cpp\
     uidish.cpp \
     uitable.cpp \
     paydialog.cpp \
-    waitdialog.cpp
+    waitdialog.cpp \
+    uratingdish.cpp
 
 HEADERS  += mainwindow.h \
     registerdialog.h \
@@ -42,7 +43,8 @@ HEADERS  += mainwindow.h \
     uidish.h \
     uitable.h \
     paydialog.h \
-    waitdialog.h
+    waitdialog.h \
+    uratingdish.h
 
 FORMS    += mainwindow.ui \
     registerdialog.ui \
@@ -51,7 +53,8 @@ FORMS    += mainwindow.ui \
     uidish.ui \
     uitable.ui \
     paydialog.ui \
-    waitdialog.ui
+    waitdialog.ui \
+    uratingdish.ui
 
 RESOURCES += \
     myicon.qrc

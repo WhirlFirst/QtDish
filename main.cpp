@@ -11,11 +11,21 @@ int main(int argc, char *argv[])
     Dish f(150,"chicken");
     Dish m(6,"ice cream");
     Dish h(20,"humberger");
+    Dish q(168,"Roast Duck");
+    Dish du(30,"Dumplings");
+    Dish ac(10,"Rouga bun");
+    Dish b(86,"Soy shrimp");
+    Dish c(28,"potato floss");
     ww.menu.insert(d);
     ww.menu.insert(fp);
     ww.menu.insert(f);
     ww.menu.insert(m);
     ww.menu.insert(h);
+    ww.menu.insert(q);
+    ww.menu.insert(du);
+    ww.menu.insert(ac);
+    ww.menu.insert(b);
+    ww.menu.insert(c);
     for(int i=0;i<30;i++){
         t[i].init(i);
     }

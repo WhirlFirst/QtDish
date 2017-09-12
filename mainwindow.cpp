@@ -7,6 +7,8 @@
 #include <QPushButton>
 #include <uidish.h>
 #include <uitable.h>
+#include <QDebug>
+int fl=0;
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -74,6 +76,44 @@ void MainWindow::on_sTableBtn_clicked()
 }
 
 
+void MainWindow::nextpagedish(){
+    fl++;
+    if(ww.menu.size()<(fl+1)*9) next->setEnabled(false);
+    for(int d = 0;d<9;d++){
+        udish[d]->btninit();
+    }
+    ww.menu.reset(fl*9);
+    int s=0;
+    for(int p=0+fl*9;p<ww.menu.size()&&p<(9+fl*9);p++){
+        Dish* temp =ww.menu.showSingle();
+        udish[s]->setDish(temp);
+        udish[s]->setlabel(temp->showName());
+        udish[s]->setprice(temp->showPrice());
+        udish[s]->setBtnabled(true);
+        connect(udish[s],SIGNAL(addnewdish()),this,SLOT(moneyfresh()));
+        s++;
+    }
+    front->setEnabled(true);
+
+}
+
+void MainWindow::frontpagedish(){
+    fl--;
+    if(fl==0) front->setEnabled(false);
+    ww.menu.reset(fl*9);
+    int s=0;
+    for(int p=0+fl*9;p<ww.menu.size()&&p<(9+fl*9);p++){
+        Dish* temp =ww.menu.showSingle();
+        udish[s]->setDish(temp);
+        udish[s]->setlabel(temp->showName());
+        udish[s]->setprice(temp->showPrice());
+        udish[s]->setBtnabled(true);
+        connect(udish[s],SIGNAL(addnewdish()),this,SLOT(moneyfresh()));
+        s++;
+    }
+    next->setEnabled(true);
+}
+
 void MainWindow::on_sDishBtn_clicked()
 {
     QGridLayout *layout = ui->gridLayout_2;
@@ -87,7 +127,7 @@ void MainWindow::on_sDishBtn_clicked()
         udish[i]= new UiDish(this);
         udish[i]->btninit();
      }
-    for(int p=0;p<ww.menu.size();p++){
+    for(int p=0;p<ww.menu.size()&&p<9;p++){
         Dish* temp =ww.menu.showSingle();
         udish[p]->setDish(temp);
         udish[p]->setlabel(temp->showName());
@@ -102,4 +142,14 @@ void MainWindow::on_sDishBtn_clicked()
                x++;
            }
        }
+    next = new QPushButton(this);
+    next->setGeometry(440,650,93,28);
+    next->setText(tr("下一页"));
+    connect(next,SIGNAL(clicked()),this,SLOT(nextpagedish()));
+    next->show();
+    front = new QPushButton(tr("上一页"),this);
+    front->setGeometry(340,650,93,28);
+    connect(front,SIGNAL(clicked(bool)),this,SLOT(frontpagedish()));
+    front->setEnabled(false);
+    front->show();
 }

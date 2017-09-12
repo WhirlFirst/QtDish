@@ -42,4 +42,6 @@ void UiDish::setBtnabled(bool p){
 
 void UiDish::btninit(){
     ui->pushButton->setEnabled(false);
+    ui->costlabel->setText(tr("0元"));
+    ui->label->setText("暂无图片");
 }

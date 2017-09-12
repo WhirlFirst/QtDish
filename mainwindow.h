@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <uitable.h>
 #include <uidish.h>
+#include <QPushButton>
 namespace Ui {
 class MainWindow;
 }
@@ -24,10 +25,14 @@ private slots:
     void on_sDishBtn_clicked();
     void tablefresh();
     void moneyfresh();
+    void nextpagedish();
+    void frontpagedish();
 private:
     Ui::MainWindow *ui;
     Uitable *utable[30];
     UiDish *udish[9];
+    QPushButton* next;
+    QPushButton* front;
 };
 
 #endif // MAINWINDOW_H

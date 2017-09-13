@@ -45,6 +45,6 @@ int main(int argc, char *argv[])
     else if(t ==2){
        l.show();
     }
-
+    qDebug()<<"last";
     return a.exec();
 }

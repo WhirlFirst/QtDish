@@ -133,11 +133,14 @@ public:
     const Dish &peek() const ;
     bool isEmpty() const ;
     int searchDish(string name);
+
     void showAllDish();
     Dish* showSingle();
     void reset(int n=0);
     void determine();
     int size();
+    void deletecurrent();
+    int currentposition();
 private:
     linkedlist<Dish> qu;
 };
@@ -153,6 +156,8 @@ public:
     int searchUser(string name);
     void showAllUser();
     void reset(int n=0);
+    void deletecurrent();
+    int currentposition();
     User* showSingle();
     int size();
 private:

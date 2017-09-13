@@ -21,6 +21,7 @@ string User::checkpwd(){
     return pwd;
 }
 
+
 int Dish::showPrice() {
     return price;
 }
@@ -181,7 +182,6 @@ Dish linkedlist<T>::deleteFront()//删除头结点
 template <class T>
 void linkedlist<T>::deleteCurrent()//删除当前结点
 {
-    node<T>* tempPtr=currPtr;
     prevPtr->deleteAfter();
     delete currPtr;
     currPtr=prevPtr;
@@ -320,6 +320,14 @@ int UQueue::size(){
     return u.getSize();
 }
 
+void UQueue::deletecurrent(){
+    u.deleteCurrent();
+}
+
+int UQueue::currentposition(){
+    return u.currentPosition();
+}
+
 void DQueue::insert(Dish item) {
     qu.insertRear(item);
     //item.changeStatus(Onqueue);
@@ -354,6 +362,15 @@ Dish* DQueue::showSingle() {
 int DQueue::size() {
     return qu.getSize();
 }
+
+void DQueue::deletecurrent(){
+    qu.deleteCurrent();
+}
+
+int DQueue::currentposition(){
+    return qu.currentPosition();
+}
+
 SuperUser ww;
 User* CurrentUser;
 Table t[30];

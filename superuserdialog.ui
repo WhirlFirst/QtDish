@@ -67,8 +67,8 @@
   <widget class="QSplitter" name="splitter">
    <property name="geometry">
     <rect>
-     <x>180</x>
-     <y>40</y>
+     <x>200</x>
+     <y>90</y>
      <width>216</width>
      <height>21</height>
     </rect>
@@ -124,6 +124,19 @@
      <width>541</width>
      <height>581</height>
     </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton">
+   <property name="geometry">
+    <rect>
+     <x>450</x>
+     <y>90</y>
+     <width>93</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>搜索</string>
    </property>
   </widget>
  </widget>

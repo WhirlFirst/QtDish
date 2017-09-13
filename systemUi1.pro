@@ -34,7 +34,9 @@ SOURCES += main.cpp\
     paydialog.cpp \
     waitdialog.cpp \
     uratingdish.cpp \
-    superuserdialog.cpp
+    superuserdialog.cpp \
+    adddishdialog.cpp \
+    adduserdialog.cpp
 
 HEADERS  += mainwindow.h \
     registerdialog.h \
@@ -46,7 +48,9 @@ HEADERS  += mainwindow.h \
     paydialog.h \
     waitdialog.h \
     uratingdish.h \
-    superuserdialog.h
+    superuserdialog.h \
+    adddishdialog.h \
+    adduserdialog.h
 
 FORMS    += mainwindow.ui \
     registerdialog.ui \
@@ -57,7 +61,9 @@ FORMS    += mainwindow.ui \
     paydialog.ui \
     waitdialog.ui \
     uratingdish.ui \
-    superuserdialog.ui
+    superuserdialog.ui \
+    adddishdialog.ui \
+    adduserdialog.ui
 
 RESOURCES += \
     myicon.qrc

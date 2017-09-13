@@ -2,7 +2,7 @@
 #define LOGINDIALOG_H
 
 #include <QDialog>
-
+#include <signal.h>
 namespace Ui {
 class LoginDialog;
 }
@@ -14,6 +14,8 @@ class LoginDialog : public QDialog
 public:
     explicit LoginDialog(QWidget *parent = 0);
     ~LoginDialog();
+signals:
+        void judge(int x);
 private slots:
     void on_commandLinkBtn_clicked();
 

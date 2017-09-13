@@ -4,6 +4,8 @@
 #include "showdialog.h"
 #include "logic.h"
 #include "QMessageBox"
+#include "superuserdialog.h"
+#include "mainwindow.h"
 using namespace std;
 LoginDialog::LoginDialog(QWidget *parent) :
     QDialog(parent),
@@ -25,7 +27,7 @@ void LoginDialog::on_commandLinkBtn_clicked()
     if(r.exec()==QDialog::Accepted){
         ShowDialog s;
         if(s.exec()==QDialog::Accepted){
-            accept();
+            done(1);
         }
     }
 }
@@ -37,22 +39,25 @@ void LoginDialog::on_loginBtn_clicked()
     string pwd = ui->pwdLineEdit->text().toStdString();
     ww.u.reset();
     int k=0;
-    for(int i =0;i<ww.u.size();i++){
-        User* tem = ww.u.showSingle();
-        if(tem->showName() == name&&tem->checkpwd() == pwd){
-            CurrentUser = tem;
-           k++;
-        }
-    }
-
-    if(k>0) {
-       accept();
+    if(name == "whirl"&&pwd == "1"){
+        done(2);
     }
     else{
-        QMessageBox::warning(this, tr("警告！"),tr("用户名或密码错误！"),QMessageBox::Yes);
-        ui->usrLineEdit->clear();
-        ui->pwdLineEdit->clear();
-        ui->usrLineEdit->setFocus();
+        for(int i =0;i<ww.u.size();i++){
+            User* tem = ww.u.showSingle();
+            if(tem->showName() == name&&tem->checkpwd() == pwd){
+                CurrentUser = tem;
+               k++;
+            }
+        }
+        if(k>0) {
+           done(1);
+        }
+        else{
+            QMessageBox::warning(this, tr("警告！"),tr("用户名或密码错误！"),QMessageBox::Yes);
+            ui->usrLineEdit->clear();
+            ui->pwdLineEdit->clear();
+            ui->usrLineEdit->setFocus();
+        }
     }
-
 }

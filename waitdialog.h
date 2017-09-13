@@ -18,6 +18,8 @@ public:
 private slots:
     void on_exitbtn_clicked();
 
+    void on_listWidget_clicked(const QModelIndex &index);
+
 private:
     Ui::WaitDialog *ui;
     URatingDish* urdish[8];

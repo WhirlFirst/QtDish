@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>348</width>
+    <height>256</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,9 +16,9 @@
   <widget class="QPushButton" name="exitBtn">
    <property name="geometry">
     <rect>
-     <x>220</x>
-     <y>220</y>
-     <width>93</width>
+     <x>190</x>
+     <y>190</y>
+     <width>101</width>
      <height>28</height>
     </rect>
    </property>
@@ -29,8 +29,8 @@
   <widget class="QCommandLinkButton" name="commandLinkBtn">
    <property name="geometry">
     <rect>
-     <x>80</x>
-     <y>160</y>
+     <x>50</x>
+     <y>140</y>
      <width>231</width>
      <height>41</height>
     </rect>
@@ -42,13 +42,20 @@
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>74</x>
-     <y>54</y>
+     <x>50</x>
+     <y>30</y>
      <width>241</width>
      <height>101</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">
+    <item row="1" column="1">
+     <widget class="QLineEdit" name="usrLineEdit">
+      <property name="placeholderText">
+       <string>请输入用户名</string>
+      </property>
+     </widget>
+    </item>
     <item row="3" column="0">
      <widget class="QLabel" name="pwdlabel">
       <property name="text">
@@ -56,10 +63,10 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="1">
-     <widget class="QLineEdit" name="usrLineEdit">
-      <property name="placeholderText">
-       <string>请输入用户名</string>
+    <item row="1" column="0">
+     <widget class="QLabel" name="userlabel">
+      <property name="text">
+       <string>用户名：</string>
       </property>
      </widget>
     </item>
@@ -73,20 +80,13 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="0">
-     <widget class="QLabel" name="userlabel">
-      <property name="text">
-       <string>用户名：</string>
-      </property>
-     </widget>
-    </item>
    </layout>
   </widget>
   <widget class="QPushButton" name="loginBtn">
    <property name="geometry">
     <rect>
-     <x>70</x>
-     <y>220</y>
+     <x>50</x>
+     <y>190</y>
      <width>93</width>
      <height>28</height>
     </rect>

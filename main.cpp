@@ -4,8 +4,13 @@
 #include "registerdialog.h"
 #include "logic.h"
 #include "QDebug"
+#include "superuserdialog.h"
 int main(int argc, char *argv[])
 {
+
+    for(int i=0;i<30;i++){
+        t[i].init(i);
+    }
     Dish d(1010,"abalone");
     Dish fp(10,"chips");
     Dish f(150,"chicken");
@@ -26,18 +31,20 @@ int main(int argc, char *argv[])
     ww.menu.insert(ac);
     ww.menu.insert(b);
     ww.menu.insert(c);
-    for(int i=0;i<30;i++){
-        t[i].init(i);
-    }
     QApplication a(argc, argv);
     User p("lulu","18811125508","123");
     ww.u.insert(p);
     LoginDialog ldl;
     MainWindow w;
-    if(ldl.exec()== QDialog::Accepted)
-    {
-           w.fresh();
-           w.show();
+    SuperUserDialog l;
+    int t =ldl.exec();
+    if(t == 1){
+        w.fresh();
+        w.show();
     }
+    else if(t ==2){
+       l.show();
+    }
+
     return a.exec();
 }

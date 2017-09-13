@@ -4,8 +4,26 @@
 
 #include <iostream>
 #include "string"
-
+#include <QSqlDatabase>
+#include <QSqlQuery>
+#include <QMessageBox>
+#include <QDebug>
 using namespace std;
+
+static bool createConnection()
+{
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName("dish.db");
+    if (!db.open()) {
+        return false;
+        qDebug()<<"no";
+    }
+    QSqlQuery query;
+    query.exec("create table dish (name varchar(30) , "
+               "int price primary key");
+    qDebug()<<"finish";
+    return true;
+}
 
 enum Status
 {

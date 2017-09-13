@@ -1,5 +1,5 @@
 #include "logic.h"
-
+#include "QTime"
 void User::addCost(int x) {
     cost = cost+x;
 }
@@ -375,3 +375,49 @@ SuperUser ww;
 User* CurrentUser;
 Table t[30];
 Table* CurrentTable = 0;
+
+void Chef::initdata(int number, int score, int time){
+    averagetime = time;
+    averagescore = score;
+    dishnumber = number;
+    t.start();
+}
+
+int Chef::shownumber(){
+    return dishnumber;
+}
+
+int Chef::showscore(){
+    return averagescore;
+}
+
+int Chef::showtime(){
+    return averagetime;
+}
+
+void Chef::startworking(Dish* p){
+    cookingDish =p;
+    dishnumber++;
+    averagescore = (averagescore+cookingDish->showScore())/2;
+    cookingDish->changeStatus(Cooking);
+    t.restart();
+}
+
+void Chef::finishworking(){
+   int s = t.elapsed();
+   averagetime = (s+averagetime)/2;
+   cookingDish->changeStatus(Finshed);
+}
+
+void Chef::newchef(string n, string p){
+    name =n;
+    pwd = p;
+}
+
+string Chef::showname(){
+    return name;
+}
+
+string Chef::showpwd(){
+    return pwd;
+}

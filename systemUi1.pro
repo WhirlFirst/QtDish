@@ -5,7 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui
-
+QT += sql
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = systemUi1
@@ -36,7 +36,10 @@ SOURCES += main.cpp\
     uratingdish.cpp \
     superuserdialog.cpp \
     adddishdialog.cpp \
-    adduserdialog.cpp
+    adduserdialog.cpp \
+    dishviewdialog.cpp \
+    chiefdialog.cpp \
+    chefdialog.cpp
 
 HEADERS  += mainwindow.h \
     registerdialog.h \
@@ -50,7 +53,10 @@ HEADERS  += mainwindow.h \
     uratingdish.h \
     superuserdialog.h \
     adddishdialog.h \
-    adduserdialog.h
+    adduserdialog.h \
+    dishviewdialog.h \
+    chiefdialog.h \
+    chefdialog.h
 
 FORMS    += mainwindow.ui \
     registerdialog.ui \
@@ -63,7 +69,10 @@ FORMS    += mainwindow.ui \
     uratingdish.ui \
     superuserdialog.ui \
     adddishdialog.ui \
-    adduserdialog.ui
+    adduserdialog.ui \
+    dishviewdialog.ui \
+    chiefdialog.ui \
+    chefdialog.ui
 
 RESOURCES += \
     myicon.qrc

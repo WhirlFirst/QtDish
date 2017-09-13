@@ -3,6 +3,7 @@
 #include "QGridLayout"
 #include "uratingdish.h"
 #include "logic.h"
+#include "dishviewdialog.h"
 WaitDialog::WaitDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::WaitDialog)
@@ -34,4 +35,10 @@ WaitDialog::~WaitDialog()
 void WaitDialog::on_exitbtn_clicked()
 {
     accept();
+}
+
+void WaitDialog::on_Dishviewbtn_clicked()
+{
+    DishviewDialog d;
+    d.exec();
 }

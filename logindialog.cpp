@@ -42,6 +42,9 @@ void LoginDialog::on_loginBtn_clicked()
     if(name == "whirl"&&pwd == "1"){
         done(2);
     }
+    if(name == "chief"&&pwd == "1"){
+        done(3);
+    }
     else{
         for(int i =0;i<ww.u.size();i++){
             User* tem = ww.u.showSingle();

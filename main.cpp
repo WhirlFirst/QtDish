@@ -5,6 +5,7 @@
 #include "logic.h"
 #include "QDebug"
 #include "superuserdialog.h"
+#include <QSqlQuery>
 int main(int argc, char *argv[])
 {
 
@@ -32,8 +33,26 @@ int main(int argc, char *argv[])
     ww.menu.insert(b);
     ww.menu.insert(c);
     QApplication a(argc, argv);
+//    if (!createConnection())  qDebug() <<"error";
+//    QSqlQuery query;
+//    ww.menu.reset();
+//    for(int i=0;i<ww.menu.size();i++){
+//        Dish* d = ww.menu.showSingle();
+//        query.prepare("insert into dish (name, price) ""values (?, ?)");
+//        query.addBindValue(d->showName().c_str());
+//        query.addBindValue(d->showPrice());
+//        query.exec();
+//    }
+//    query.exec("select * from dish");
+//    qDebug()<<query.size();
+//    while(query.next())
+//        {
+//            qDebug() << query.value(0).toString()
+//                           << query.value(1).toInt();
+//        }
     User p("lulu","18811125508","123");
     ww.u.insert(p);
+    qDebug() <<"finish";
     LoginDialog ldl;
     MainWindow w;
     SuperUserDialog l;
@@ -45,6 +64,8 @@ int main(int argc, char *argv[])
     else if(t ==2){
        l.show();
     }
-    qDebug()<<"last";
+    else if(t==3){
+
+    }
     return a.exec();
 }

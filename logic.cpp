@@ -66,7 +66,7 @@ int Dish::showScore(){
     return score;
 }
 
-Chef::Chef(string n, string p, int number, int score, int time){
+Chef::Chef(string n, string p, int number, float score, float time){
     name =n;
     pwd = p;
     averagetime = time;
@@ -82,15 +82,16 @@ void Chef::initdata(int number, int score, int time){
     t.start();
 }
 
-int Chef::shownumber(){
+float Chef::showdishnumber(){
+
     return dishnumber;
 }
 
-int Chef::showscore(){
+float Chef::showscore(){
     return averagescore;
 }
 
-int Chef::showtime(){
+float Chef::showtime(){
     return averagetime;
 }
 
@@ -103,8 +104,9 @@ void Chef::startworking(Dish* p){
 }
 
 void Chef::finishworking(){
-   int s = t.elapsed();
-   averagetime = (s+averagetime)/2;
+   float s = t.elapsed()/1000;
+   if(averagetime =0) averagetime =s;
+   else averagetime = (s+averagetime)/2;
    cookingDish->changeStatus(Finshed);
 }
 
@@ -116,7 +118,9 @@ string Chef::showpwd(){
     return pwd;
 }
 
-
+void Chef::settablenumber(int u){
+    dishtablenumber = u;
+}
 
 void Table::addDish(Dish item) {
     item.changeStatus(Chosed);
@@ -144,6 +148,10 @@ string Table::showNumber(){
 
 TableStatus Table::showStatus() {
     return t ;
+}
+
+void Table::setwaiter(Waiter* p){
+    surveice = p;
 }
 
 void UQueue::insert(User item){
@@ -227,9 +235,15 @@ int DQueue::currentposition(){
 }
 
 
+void Waiter::rating(int sc){
+    if(score ==0) score =sc;
+    else score = (sc+score)/2;
+}
 
 
+Chef* CurrentChef;
 SuperUser ww;
 User* CurrentUser;
 Table t[30];
 Table* CurrentTable = 0;
+Waiter* CurrentWaiter;

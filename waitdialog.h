@@ -19,6 +19,8 @@ private slots:
     void on_exitbtn_clicked();
     void on_Dishviewbtn_clicked();
 
+    void on_servicebtn_clicked();
+
 private:
     Ui::WaitDialog *ui;
     URatingDish* urdish[8];

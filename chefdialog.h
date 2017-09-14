@@ -14,9 +14,11 @@ class chefDialog : public QDialog
 public:
     explicit chefDialog(QWidget *parent = 0);
     ~chefDialog();
-
+    void fresh();
 private slots:
     void on_startbtn_clicked();
+
+    void on_finishbtn_clicked();
 
 private:
     Ui::chefDialog *ui;

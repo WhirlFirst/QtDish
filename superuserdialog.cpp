@@ -92,12 +92,12 @@ void SuperUserDialog::on_deletebtn_clicked()
     QTableWidget* s = ui->tableWidget;
     int row1 =-1;
     row1 = s->currentRow();
-    if(st==1&&row1>0){
+    if(st==1&&row1>=0){
         ww.menu.reset(row1);
         ww.menu.deletecurrent();
         s->removeRow(row1);
     }
-    if(st==2&&row1>0){
+    if(st==2&&row1>=0){
         ww.u.reset(row1);
         ww.u.deletecurrent();
         s->removeRow(row1);

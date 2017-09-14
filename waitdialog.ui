@@ -95,6 +95,19 @@
     <string>查看菜品进度</string>
    </property>
   </widget>
+  <widget class="QPushButton" name="servicebtn">
+   <property name="geometry">
+    <rect>
+     <x>780</x>
+     <y>30</y>
+     <width>111</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>召唤服务员</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

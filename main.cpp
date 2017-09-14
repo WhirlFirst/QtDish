@@ -9,9 +9,10 @@
 #include "chefdialog.h"
 int main(int argc, char *argv[])
 {
-
+    Waiter wa;
     for(int i=0;i<30;i++){
         t[i].init(i);
+        t[i].setwaiter(&wa);
     }
     Dish d(1010,"abalone");
     Dish fp(10,"chips");
@@ -57,7 +58,11 @@ int main(int argc, char *argv[])
     t[5].StartWorking(&p);
     t[6].StartWorking(&p);
     t[5].addDish(h);
+    t[5].reset();
+    t[5].showSingle()->changeStatus(Onqueue);
     t[6].addDish(c);
+    t[6].reset();
+    t[6].showSingle()->changeStatus(Onqueue);
     ww.u.insert(p);
     qDebug() <<"finish";
     LoginDialog ldl;
@@ -74,6 +79,7 @@ int main(int argc, char *argv[])
     }
     else if(xxx==3){
         che.show();
+        che.fresh();
     }
     return a.exec();
 }

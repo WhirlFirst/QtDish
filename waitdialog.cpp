@@ -25,6 +25,7 @@ WaitDialog::WaitDialog(QWidget *parent) :
             x++;
         }
     }
+    CurrentWaiter = CurrentTable->surveice;
 }
 
 WaitDialog::~WaitDialog()
@@ -41,4 +42,9 @@ void WaitDialog::on_Dishviewbtn_clicked()
 {
     DishviewDialog d;
     d.exec();
+}
+
+void WaitDialog::on_servicebtn_clicked()
+{
+    CurrentWaiter->cm.insertRear(CustomerMessage(CurrentTable->showNumber(),"beckon"));
 }

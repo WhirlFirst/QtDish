@@ -74,22 +74,43 @@ private:
 class Chef{
 public:
     void startworking(Dish* p);
-    void finishworking();
-    Chef(string n = "chef",string p = "1",int number =0,int score = 0,int time=0);
+    Chef(string n = "chef",string p = "1",int number =0,float score = 0,float time=0);
     void initdata(int number,int score,int time);
-    int showscore();
-    int shownumber();
-    int showtime();
+    float showscore();
+    float showdishnumber();
+    float showtime();
     string showname();
     string showpwd();
-private:
-    int averagetime;
-    int averagescore;
-    int dishnumber;
-    QTime t;
+    void settablenumber(int u);
     Dish* cookingDish;
+signals:
+    void finishworking();
+private:
+    float averagetime;
+    float averagescore;
+    float dishnumber;
+    QTime t;
+    int dishtablenumber;
     string name;
     string pwd;
+};
+
+
+
+class DishMessage{
+ public:
+    int tablenumber;
+    string dishname;
+    DishMessage(int tab,string dd):tablenumber(tab),dishname(dd){};
+    DishMessage(){};
+};
+
+class CustomerMessage{
+public:
+    string tablenumber;
+    string things;
+    CustomerMessage(string tab,string th):tablenumber(tab),things(th){};
+    CustomerMessage(){};
 };
 
 template <class T>
@@ -402,7 +423,24 @@ private:
 };
 
 
+
+
+class Waiter{
+public:
+    Waiter(string n = "waiter",string p ="1",int s=0):score(s),name(n),pwd(p){};
+    void rating(int sc);
+    string showName();
+    string showPwd();
+    linkedlist<DishMessage> dm;
+    linkedlist<CustomerMessage> cm;
+private:
+    float score;
+    string name;
+    string pwd;
+};
+
 enum TableStatus{Empty,Full};
+
 
 
 class Table: public DQueue{
@@ -413,8 +451,10 @@ public:
     void addDish(Dish item);
     void deleteDish(Dish item);
     void rateing();
+    void setwaiter(Waiter* f);
     string showNumber();
     TableStatus showStatus();
+    Waiter* surveice;
 private:
     User *u;
     TableStatus t;
@@ -436,9 +476,14 @@ public:
    //linkedlist<Chef> chef;
 private:
 };
+
+
+
+
 extern SuperUser ww;
 extern User* CurrentUser;
 extern Table t[30];
 extern Table* CurrentTable;
 extern Chef* CurrentChef;
+extern Waiter* CurrentWaiter;
 #endif // LOGIC_H

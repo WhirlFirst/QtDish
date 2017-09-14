@@ -43,6 +43,7 @@ void LoginDialog::on_loginBtn_clicked()
         done(2);
     }
     if(name == "chef"&&pwd == "1"){
+        CurrentChef = new Chef("chef","1",0,0,0);
         done(3);
     }
     else{

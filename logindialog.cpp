@@ -42,7 +42,7 @@ void LoginDialog::on_loginBtn_clicked()
     if(name == "whirl"&&pwd == "1"){
         done(2);
     }
-    if(name == "chief"&&pwd == "1"){
+    if(name == "chef"&&pwd == "1"){
         done(3);
     }
     else{

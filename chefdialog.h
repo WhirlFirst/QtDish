@@ -15,6 +15,9 @@ public:
     explicit chefDialog(QWidget *parent = 0);
     ~chefDialog();
 
+private slots:
+    void on_startbtn_clicked();
+
 private:
     Ui::chefDialog *ui;
 };

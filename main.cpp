@@ -6,6 +6,7 @@
 #include "QDebug"
 #include "superuserdialog.h"
 #include <QSqlQuery>
+#include "chefdialog.h"
 int main(int argc, char *argv[])
 {
 
@@ -22,6 +23,7 @@ int main(int argc, char *argv[])
     Dish ac(10,"Rouga bun");
     Dish b(86,"Soy shrimp");
     Dish c(28,"potato floss");
+    //Chef x("chef","1");
     ww.menu.insert(d);
     ww.menu.insert(fp);
     ww.menu.insert(f);
@@ -32,6 +34,7 @@ int main(int argc, char *argv[])
     ww.menu.insert(ac);
     ww.menu.insert(b);
     ww.menu.insert(c);
+    //ww.chef.insertRear(x);
     QApplication a(argc, argv);
 //    if (!createConnection())  qDebug() <<"error";
 //    QSqlQuery query;
@@ -51,21 +54,26 @@ int main(int argc, char *argv[])
 //                           << query.value(1).toInt();
 //        }
     User p("lulu","18811125508","123");
+    t[5].StartWorking(&p);
+    t[6].StartWorking(&p);
+    t[5].addDish(h);
+    t[6].addDish(c);
     ww.u.insert(p);
     qDebug() <<"finish";
     LoginDialog ldl;
     MainWindow w;
     SuperUserDialog l;
-    int t =ldl.exec();
-    if(t == 1){
+    chefDialog che;
+    int xxx =ldl.exec();
+    if(xxx == 1){
         w.fresh();
         w.show();
     }
-    else if(t ==2){
+    else if(xxx ==2){
        l.show();
     }
-    else if(t==3){
-
+    else if(xxx==3){
+        che.show();
     }
     return a.exec();
 }

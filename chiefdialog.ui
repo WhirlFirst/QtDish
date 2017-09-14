@@ -1,12 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>chiefDialog</class>
- <widget name="chiefDialog" class="QDialog">
+ <widget class="QDialog" name="chiefDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>1070</width>
+    <height>761</height>
    </rect>
   </property>
   <property name="windowTitle">

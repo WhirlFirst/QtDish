@@ -26,7 +26,7 @@ DishviewDialog::DishviewDialog(QWidget *parent) :
     for(int i=0;i<CurrentTable->size();i++){
         Dish* p =CurrentTable->showSingle();
         s->setItem(i,0,new QTableWidgetItem(QString::fromStdString(p->showName())));
-        s->setItem(i,1,new QTableWidgetItem(QString::number(p->showScore())));
+        s->setItem(i,1,new QTableWidgetItem(QString::fromStdString(p->showStatus())));
     }
     s->show();
 }

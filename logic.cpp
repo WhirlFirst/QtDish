@@ -66,202 +66,57 @@ int Dish::showScore(){
     return score;
 }
 
-
-template <class T>
-node<T>::node(T d,node<T>* next):next(next),data(d)
-{
-}
-template <class T>
-node<T>* node<T>::nextNode()
-{
-    return next;
-}
-template <class T>
-const node<T>* node<T>::nextNode()const
-{
-    return next;
-}
-template <class T>
-void node<T>::insertAfter(node<T>* p)
-{
-    p->next=next;
-    next=p;
-}
-template <class T>
-node<T>* node<T>::deleteAfter()
-{
-    node<T>* tempPtr=next;
-    if(next==0)return 0;
-    next=tempPtr->next;
-    return tempPtr;
+Chef::Chef(string n, string p, int number, int score, int time){
+    name =n;
+    pwd = p;
+    averagetime = time;
+    averagescore = score;
+    dishnumber = number;
+    t.start();
 }
 
-
-template <class T>
-int linkedlist<T>::currentPosition(void)//返回游标当前的位置
-{
-    node<T>* tempPtr=front->nextNode();
-    position=0;
-    while(tempPtr!=currPtr)
-    {
-        tempPtr=tempPtr->nextNode();
-        position++;
-    }
-    return position;
-}
-template <class T>
-int linkedlist<T>::getSize()const//返回链表中的元素个数
-{
-    return size;
-}
-template <class T>
-const Dish& linkedlist<T>::data()const//返回对当前结点成员数据的常引用
-{
-    return currPtr->data;
-}
-template <class T>
-void linkedlist<T>::next()//使游标移动到下一个结点
-{
-    prevPtr=currPtr;
-    currPtr=currPtr->nextNode();
-}
-template <class T>
-bool linkedlist<T>::endOfList()const//游标是否到了链尾
-{
-    if(currPtr==NULL)return true;
-    else return false;
-}
-template <class T>
-bool linkedlist<T>::isEmpty()const//链表是否为空
-{
-    if(front==rear)return true;
-    else return false;
-}
-template <class T>
-void linkedlist<T>::reset(int pos)//初始化游标的位置（第一位数的位置设为0)
-{
-    prevPtr=front;
-    currPtr=front->nextNode();
-    position=pos;
-    for(int i=0;i<position;i++)
-    {
-        prevPtr=currPtr;
-        currPtr=currPtr->nextNode();
-    }
-}
-template <class T>
-void linkedlist<T>::insertFront(T item)//在表头插入结点
-{
-    prevPtr=currPtr;
-    currPtr=new node<T>(item,front->nextNode());
-    front->next=currPtr;
-    if(rear==front)
-    {
-        rear=currPtr;
-    }
-    size++;
-}
-template <class T>
-void linkedlist<T>::insertRear(T item)//在表尾添加结点
-{
-    prevPtr=currPtr;
-    currPtr=new node<T>(item,rear->nextNode());
-    rear->next=currPtr;
-    rear=currPtr;
-    size++;
-}
-template <class T>
-Dish linkedlist<T>::deleteFront()//删除头结点
-{
-    currPtr=front->nextNode();
-    delete front;
-    front=currPtr;
-    size--;
-    return front->data;
-}
-template <class T>
-void linkedlist<T>::deleteCurrent()//删除当前结点
-{
-    prevPtr->deleteAfter();
-    delete currPtr;
-    currPtr=prevPtr;
-    size--;
-}
-template <class T>
-void linkedlist<T>::clear()//清空链表：释放所有结点的内存空间。被析构函数和“operator ="调用
-{
-    node<T>* tempPtr=front->nextNode();
-    while(tempPtr!=NULL)
-    {
-        node<T>* tempQ=tempPtr;
-        tempPtr=tempPtr->nextNode();
-        delete tempQ;
-        size--;
-    }
-    rear=front;
-    currPtr=prevPtr=front;
-}
-template <class T>
-int linkedlist<T>::searchDish(string name){
-    int k=0;
-    prevPtr=front;
-    currPtr=front->nextNode();
-    for(int i=0;i<size;i++)
-    {
-        if(currPtr->data.showName() == name) k++;
-        prevPtr=currPtr;
-        currPtr=currPtr->nextNode();
-    }
-    return k;
-}
-template <class T>
-T* linkedlist<T>::deletedata(string DishName){
-    prevPtr=front;
-    currPtr=front->nextNode();
-    for(int i=0;i<size;i++)
-    {
-        if(currPtr->data.showName() == DishName) {
-            node<T>* tempPtr=currPtr;
-            prevPtr->deleteAfter();
-            delete currPtr;
-            currPtr=prevPtr;
-            size--;
-            return &(tempPtr->data);
-        }
-        prevPtr=currPtr;
-        currPtr=currPtr->nextNode();
-    }
+void Chef::initdata(int number, int score, int time){
+    averagetime = time;
+    averagescore = score;
+    dishnumber = number;
+    t.start();
 }
 
-template <class T>
-void linkedlist<T>::Show() {
-    prevPtr=front;
-    currPtr=front->nextNode();
-    for (int i = 0; i < size; ++i) {
-        cout<<currPtr->data.showName()<<endl;
-        prevPtr=currPtr;
-        currPtr=currPtr->nextNode();
-    }
+int Chef::shownumber(){
+    return dishnumber;
 }
 
-template <class T>
-void linkedlist<T>::determine(){
-    prevPtr = front;
-    currPtr = front->nextNode();
-    for (int i = 0; i < size; ++i) {
-        currPtr->data.changeStatus(Onqueue);
-        prevPtr = currPtr;
-        currPtr = currPtr->nextNode();
-    }
+int Chef::showscore(){
+    return averagescore;
+}
+
+int Chef::showtime(){
+    return averagetime;
+}
+
+void Chef::startworking(Dish* p){
+    cookingDish =p;
+    dishnumber++;
+    averagescore = (averagescore+cookingDish->showScore())/2;
+    cookingDish->changeStatus(Cooking);
+    t.restart();
+}
+
+void Chef::finishworking(){
+   int s = t.elapsed();
+   averagetime = (s+averagetime)/2;
+   cookingDish->changeStatus(Finshed);
+}
+
+string Chef::showname(){
+    return name;
+}
+
+string Chef::showpwd(){
+    return pwd;
 }
 
 
-template <class T>
-T* linkedlist<T>::ShowSingle() {
-    prevPtr = currPtr;
-    currPtr = currPtr->nextNode();
-    return &(prevPtr->data);
-}
 
 void Table::addDish(Dish item) {
     item.changeStatus(Chosed);
@@ -371,53 +226,10 @@ int DQueue::currentposition(){
     return qu.currentPosition();
 }
 
+
+
+
 SuperUser ww;
 User* CurrentUser;
 Table t[30];
 Table* CurrentTable = 0;
-
-void Chef::initdata(int number, int score, int time){
-    averagetime = time;
-    averagescore = score;
-    dishnumber = number;
-    t.start();
-}
-
-int Chef::shownumber(){
-    return dishnumber;
-}
-
-int Chef::showscore(){
-    return averagescore;
-}
-
-int Chef::showtime(){
-    return averagetime;
-}
-
-void Chef::startworking(Dish* p){
-    cookingDish =p;
-    dishnumber++;
-    averagescore = (averagescore+cookingDish->showScore())/2;
-    cookingDish->changeStatus(Cooking);
-    t.restart();
-}
-
-void Chef::finishworking(){
-   int s = t.elapsed();
-   averagetime = (s+averagetime)/2;
-   cookingDish->changeStatus(Finshed);
-}
-
-void Chef::newchef(string n, string p){
-    name =n;
-    pwd = p;
-}
-
-string Chef::showname(){
-    return name;
-}
-
-string Chef::showpwd(){
-    return pwd;
-}

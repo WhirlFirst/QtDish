@@ -27,16 +27,13 @@ WaitDialog::WaitDialog(QWidget *parent) :
     }
     CurrentWaiter = CurrentTable->surveice;
 }
-
+int rat = 0;
 WaitDialog::~WaitDialog()
 {
     delete ui;
 }
 
-void WaitDialog::on_exitbtn_clicked()
-{
-    accept();
-}
+
 
 void WaitDialog::on_Dishviewbtn_clicked()
 {
@@ -47,4 +44,35 @@ void WaitDialog::on_Dishviewbtn_clicked()
 void WaitDialog::on_servicebtn_clicked()
 {
     CurrentWaiter->cm.insertRear(CustomerMessage(CurrentTable->showNumber(),"beckon"));
+}
+
+void WaitDialog::on_btn1_clicked()
+{
+    rat =1;
+}
+
+void WaitDialog::on_btn2_clicked()
+{
+    rat =2;
+}
+
+void WaitDialog::on_btn3_clicked()
+{
+    rat =3;
+}
+
+void WaitDialog::on_btn4_clicked()
+{
+    rat =4;
+}
+
+void WaitDialog::on_btn5_clicked()
+{
+    rat =5;
+}
+
+void WaitDialog::on_exitbtn_clicked()
+{
+    CurrentWaiter->rating(rat);
+    accept();
 }

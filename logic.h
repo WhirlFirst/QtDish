@@ -177,7 +177,7 @@ public:
     void insertRear(T item);//在表尾添加结点
     //void insertAt(Dish item);//在当前结点之前插入结点
     //void insertAfter(Dish item);//在当前结点之后插入结点
-    Dish deleteFront();//删除头结点
+    T deleteFront();//删除头结点
     void deleteCurrent();//删除当前结点
     const Dish&data()const;//返回对当前结点成员数据的常引用
     //清空链表：释放所有结点的内存空间。被析构函数和“operator ="调用
@@ -289,7 +289,7 @@ void linkedlist<T>::insertRear(T item)//在表尾添加结点
     size++;
 }
 template <class T>
-Dish linkedlist<T>::deleteFront()//删除头结点
+T linkedlist<T>::deleteFront()//删除头结点
 {
     currPtr=front->nextNode();
     delete front;
@@ -445,7 +445,7 @@ enum TableStatus{Empty,Full};
 
 class Table: public DQueue{
 public:
-    Table(int number = 0,TableStatus r=Empty):t(r),Number(number),u(NULL){};
+    Table(int number = 0,TableStatus r=Empty):t(r),Number(number),u(NULL),surveice(0){};
     void StartWorking(User* uu);
     void init(int n);
     void addDish(Dish item);
@@ -453,7 +453,7 @@ public:
     void rateing();
     void setwaiter(Waiter* f);
     string showNumber();
-    TableStatus showStatus();
+    string showStatus();
     Waiter* surveice;
 private:
     User *u;

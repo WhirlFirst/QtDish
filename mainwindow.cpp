@@ -60,7 +60,7 @@ void MainWindow::on_actionSign_out_triggered()
 int flag=0;
 void MainWindow::tablefresh(){
     for(int i=0;i<30;i++){
-        if(utable[i]->tp->showStatus() == Chosed) {
+        if(utable[i]->tp->showStatus()== "Full") {
             utable[i]->setStyleSheet("background-color:grey;");
             utable[i]->disable();
         }
@@ -78,7 +78,7 @@ void MainWindow::on_sTableBtn_clicked()
             utable[i]->settable(&t[i]);
             utable[i]->settext(t[i].showNumber());
             connect(utable[i],SIGNAL(select()),this,SLOT(tablefresh()));
-
+            connect(utable[i],SIGNAL(select()),this,SLOT(msg()));
          }
          int i =0;
          tablefresh();
@@ -104,7 +104,7 @@ void MainWindow::on_sTableBtn_clicked()
             utable[i]->settable(&t[i]);
             utable[i]->settext(t[i].showNumber());
             connect(utable[i],SIGNAL(select()),this,SLOT(tablefresh()));
-
+            connect(utable[i],SIGNAL(select()),this,SLOT(msg()));
          }
         tablefresh();
         int y=0;
@@ -227,4 +227,8 @@ void MainWindow::on_PayBtn_clicked()
             this->close();
         }
     }
+}
+
+void MainWindow::msg(){
+    QMessageBox::information(this, tr("选桌成功！"),tr("点击选菜继续！"),QMessageBox::Yes);
 }

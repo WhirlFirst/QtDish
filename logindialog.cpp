@@ -46,6 +46,9 @@ void LoginDialog::on_loginBtn_clicked()
         CurrentChef = new Chef("chef","1",0,0,0);
         done(3);
     }
+    if(name == "waiter"&&pwd =="1"){
+        done(4);
+    }
     else{
         for(int i =0;i<ww.u.size();i++){
             User* tem = ww.u.showSingle();

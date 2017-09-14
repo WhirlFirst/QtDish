@@ -30,9 +30,14 @@ void Uitable::disable(){
 
 void Uitable::on_pushButton_clicked()
 {
-    CurrentTable = tp;
-    CurrentTable->StartWorking(CurrentUser);
-    QMessageBox::information(this, tr("选桌成功！"),tr("点击选菜继续！"),QMessageBox::Yes);
+    if(tp->showStatus()=="Empty"){
+        CurrentTable = tp;
+        CurrentTable->StartWorking(CurrentUser);
+    }
+    else {
+        tp->surveice = CurrentWaiter;
+        ui->pushButton->setEnabled(false);
+    }
     emit select();
 }
 

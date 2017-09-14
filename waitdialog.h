@@ -21,6 +21,16 @@ private slots:
 
     void on_servicebtn_clicked();
 
+    void on_btn1_clicked();
+
+    void on_btn2_clicked();
+
+    void on_btn3_clicked();
+
+    void on_btn4_clicked();
+
+    void on_btn5_clicked();
+
 private:
     Ui::WaitDialog *ui;
     URatingDish* urdish[8];

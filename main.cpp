@@ -7,9 +7,12 @@
 #include "superuserdialog.h"
 #include <QSqlQuery>
 #include "chefdialog.h"
+#include "waiterdialog.h"
 int main(int argc, char *argv[])
 {
     Waiter wa;
+    wa.cm.insertRear(CustomerMessage("5","加水"));
+    wa.dm.insertRear(DishMessage(5,"土豆丝"));
     for(int i=0;i<30;i++){
         t[i].init(i);
         t[i].setwaiter(&wa);
@@ -69,6 +72,7 @@ int main(int argc, char *argv[])
     MainWindow w;
     SuperUserDialog l;
     chefDialog che;
+    waiterDialog wati;
     int xxx =ldl.exec();
     if(xxx == 1){
         w.fresh();
@@ -80,6 +84,11 @@ int main(int argc, char *argv[])
     else if(xxx==3){
         che.show();
         che.fresh();
+    }
+    else if(xxx==4){
+        CurrentWaiter = &wa;
+        wati.showui();
+        wati.show();
     }
     return a.exec();
 }

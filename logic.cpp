@@ -146,8 +146,15 @@ string Table::showNumber(){
     return to_string(Number);
 }
 
-TableStatus Table::showStatus() {
-    return t ;
+string Table::showStatus() {
+    switch (t) {
+    case Empty:
+        return "Empty";
+        break;
+    default:
+        return "Full";
+        break;
+    }
 }
 
 void Table::setwaiter(Waiter* p){

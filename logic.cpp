@@ -251,6 +251,14 @@ float Waiter::showscore(){
     return score;
 }
 
+string Waiter::showName(){
+    return name;
+}
+
+string Waiter::showPwd(){
+    return pwd;
+}
+
 Chef* CurrentChef;
 SuperUser ww;
 User* CurrentUser;

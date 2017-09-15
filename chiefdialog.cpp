@@ -43,10 +43,10 @@ void chiefDialog::freshdata(){
     s->show();
 
     QStringList headerswaiter;
-    QTableWidget* sw = ui->cheftableWidget;
+    QTableWidget* sw = ui->waitertableWidget;
     sw->clear();
     sw->setColumnCount(3);
-    sw->setRowCount(1);
+    sw->setRowCount(CurrentManager->waiterlist.size());
     headerswaiter << "服务员姓名" << "服务总数"<<"评分";
     sw->setHorizontalHeaderLabels(headerswaiter);
     sw->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -54,11 +54,13 @@ void chiefDialog::freshdata(){
     sw->setShowGrid(true);
     sw->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     sw->resizeRowsToContents();
-//    for(int i=0;i<1;i++){
-//        Waiter s = waiterlist[0];
-//        sw->setItem(i,0,new QTableWidgetItem(QString::fromStdString(s.showName())));
-//        sw->setItem(i,1,new QTableWidgetItem(QString::number(s.acount)));
-//        sw->setItem(i,2,new QTableWidgetItem(QString::number(s.showscore())));
-//    }
+    WaiterMap::iterator it;
+    int yy =0;
+    for(it = CurrentManager->waiterlist.begin();it!=CurrentManager->waiterlist.end();it++){
+        sw->setItem(yy,0,new QTableWidgetItem(QString::fromStdString(it.value().showName())));
+        sw->setItem(yy,1,new QTableWidgetItem(QString::number(it.value().acount)));
+        sw->setItem(yy,2,new QTableWidgetItem(QString::number(it.value().showscore())));
+        yy++;
+    }
     sw->show();
 }

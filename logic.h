@@ -10,6 +10,7 @@
 #include <QDebug>
 #include <QTime>
 #include <vector>
+#include <QMap>
 using namespace std;
 
 static bool createConnection()
@@ -431,7 +432,6 @@ public:
     string showName();
     string showPwd();
     float showscore();
-    float showtime();
     linkedlist<DishMessage> dm;
     linkedlist<CustomerMessage> cm;
     int acount;
@@ -441,11 +441,13 @@ private:
     string pwd;
 };
 
-
+typedef QMap<QString, Waiter> WaiterMap;
+typedef QMap<QString, Chef> ChefMap;
 class Manager{
 public:
     Manager(){}
     linkedlist<Chef> cheflist;
+    WaiterMap waiterlist;
 };
 
 enum TableStatus{Empty,Full};
@@ -482,7 +484,8 @@ class SuperUser{
 public:
     UQueue u;
     DQueue menu;
-   //linkedlist<Chef> chef;
+   WaiterMap waitermap;
+   ChefMap chefmap;
 private:
 };
 

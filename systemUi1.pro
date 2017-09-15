@@ -40,7 +40,9 @@ SOURCES += main.cpp\
     dishviewdialog.cpp \
     chiefdialog.cpp \
     chefdialog.cpp \
-    waiterdialog.cpp
+    waiterdialog.cpp \
+    addchefdialog.cpp \
+    addwaiterdialog.cpp
 
 HEADERS  += mainwindow.h \
     registerdialog.h \
@@ -58,7 +60,9 @@ HEADERS  += mainwindow.h \
     dishviewdialog.h \
     chiefdialog.h \
     chefdialog.h \
-    waiterdialog.h
+    waiterdialog.h \
+    addchefdialog.h \
+    addwaiterdialog.h
 
 FORMS    += mainwindow.ui \
     registerdialog.ui \
@@ -75,7 +79,9 @@ FORMS    += mainwindow.ui \
     dishviewdialog.ui \
     chiefdialog.ui \
     chefdialog.ui \
-    waiterdialog.ui
+    waiterdialog.ui \
+    addchefdialog.ui \
+    addwaiterdialog.ui
 
 RESOURCES += \
     myicon.qrc

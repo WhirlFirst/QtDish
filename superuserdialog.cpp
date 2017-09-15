@@ -10,6 +10,8 @@
 #include "adddishdialog.h"
 #include <QMessageBox>
 #include "adduserdialog.h"
+#include "addchefdialog.h"
+#include "addwaiterdialog.h"
 SuperUserDialog::SuperUserDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::SuperUserDialog)
@@ -84,7 +86,34 @@ void SuperUserDialog::on_addBtn_clicked()
        }
        s->show();
     }
-
+    else if(st==3){
+        addchefDialog as;
+        as.exec();
+        QTableWidget* s = ui->tableWidget;
+        s->setRowCount(ww.chefmap.size());
+        ChefMap::iterator it;
+        int i=0;
+        for(it = ww.chefmap.begin();it!= ww.chefmap.end();it++){
+            s->setItem(i,0,new QTableWidgetItem(QString::fromStdString(it.value().showname())));
+            s->setItem(i,1,new QTableWidgetItem(QString::fromStdString(it.value().showpwd())));
+            i++;
+        }
+        s->show();
+    }
+    else if(st==4){
+        addwaiterDialog as;
+        as.exec();
+        QTableWidget* s = ui->tableWidget;
+        s->setRowCount(ww.waitermap.size());
+        WaiterMap::iterator it;
+        int i=0;
+        for(it = ww.waitermap.begin();it!= ww.waitermap.end();it++){
+            s->setItem(i,0,new QTableWidgetItem(QString::fromStdString(it.value().showName())));
+            s->setItem(i,1,new QTableWidgetItem(QString::fromStdString(it.value().showPwd())));
+            i++;
+        }
+        s->show();
+    }
 }
 
 void SuperUserDialog::on_deletebtn_clicked()
@@ -97,9 +126,19 @@ void SuperUserDialog::on_deletebtn_clicked()
         ww.menu.deletecurrent();
         s->removeRow(row1);
     }
-    if(st==2&&row1>=0){
+    else if(st==2&&row1>=0){
         ww.u.reset(row1);
         ww.u.deletecurrent();
+        s->removeRow(row1);
+    }
+    else if(st==3&&row1>=0){
+        QString sd = s->item(row1,0)->text();
+        ww.chefmap.remove(sd);
+        s->removeRow(row1);
+    }
+    else if(st==4&&row1>=0){
+        QString sd = s->item(row1,0)->text();
+        ww.waitermap.remove(sd);
         s->removeRow(row1);
     }
 
@@ -111,26 +150,12 @@ void SuperUserDialog::on_pushButton_clicked()
     string e = ui->Searchline->text().toStdString();
     int w=0;
     int y=0;
-    if(st ==1){
-        ww.menu.reset();
-        for(int i=0;i<ww.menu.size();i++){
-            Dish* p =ww.menu.showSingle();
-            if(p->showName() == e) {
-                w=ww.menu.currentposition()-1;
-                y=1;
-                break;
-            }
-        }
-    }
-    else if(st ==2){
-        ww.u.reset();
-        for(int i=0;i<ww.u.size();i++){
-            User* p =ww.u.showSingle();
-            if(p->checknumber() == e) {
-                w=ww.u.currentposition()-1;
-                y=1;
-                break;
-            }
+
+    for(int i=0;i<s->rowCount();i++){
+        if(s->item(i,0)->text()==ui->Searchline->text()){
+            w=i;
+            y=1;
+            break;
         }
     }
     if(y==1) {
@@ -168,4 +193,56 @@ void SuperUserDialog::on_userbtn_clicked()
     }
     s->show();
     st=2;
+}
+
+void SuperUserDialog::on_chiefbtn_clicked()
+{
+    ui->Searchline->setPlaceholderText(tr("请输入厨师姓名"));
+    QStringList headers;
+    QTableWidget* s = ui->tableWidget;
+    s->clear();
+    s->setColumnCount(2);
+    s->setRowCount(ww.chefmap.size());
+    headers <<"厨师姓名"<<"密码";
+    s->setHorizontalHeaderLabels(headers);
+    s->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    s->setSelectionBehavior(QAbstractItemView::SelectRows);
+    s->setShowGrid(true);
+    s->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    s->resizeRowsToContents();
+    ChefMap::iterator it;
+    int i=0;
+    for(it = ww.chefmap.begin();it!= ww.chefmap.end();it++){
+        s->setItem(i,0,new QTableWidgetItem(QString::fromStdString(it.value().showname())));
+        s->setItem(i,1,new QTableWidgetItem(QString::fromStdString(it.value().showpwd())));
+        i++;
+    }
+    s->show();
+    st=3;
+}
+
+void SuperUserDialog::on_waiterbtn_clicked()
+{
+    ui->Searchline->setPlaceholderText(tr("请输入服务员姓名"));
+    QStringList headers;
+    QTableWidget* s = ui->tableWidget;
+    s->clear();
+    s->setColumnCount(2);
+    s->setRowCount(ww.waitermap.size());
+    headers <<"服务员姓名"<<"密码";
+    s->setHorizontalHeaderLabels(headers);
+    s->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    s->setSelectionBehavior(QAbstractItemView::SelectRows);
+    s->setShowGrid(true);
+    s->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    s->resizeRowsToContents();
+    WaiterMap::iterator it;
+    int i=0;
+    for(it = ww.waitermap.begin();it!= ww.waitermap.end();it++){
+        s->setItem(i,0,new QTableWidgetItem(QString::fromStdString(it.value().showName())));
+        s->setItem(i,1,new QTableWidgetItem(QString::fromStdString(it.value().showPwd())));
+        i++;
+    }
+    s->show();
+    st=4;
 }

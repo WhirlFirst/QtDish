@@ -27,6 +27,10 @@ private slots:
 
     void on_userbtn_clicked();
 
+    void on_chiefbtn_clicked();
+
+    void on_waiterbtn_clicked();
+
 private:
     Ui::SuperUserDialog *ui;
     int st;

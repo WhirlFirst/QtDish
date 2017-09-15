@@ -69,8 +69,11 @@ int main(int argc, char *argv[])
     t[6].showSingle()->changeStatus(Onqueue);
     ww.u.insert(p);
     qDebug() <<"finish";
+    ww.chefmap.insert("chef1",Chef("chef1","2",30,4.7,7.3));
+    ww.waitermap.insert(QString::fromStdString(wa.showName()),wa);
     CurrentManager = new Manager;
     CurrentManager->cheflist.insertRear(Chef("chef1","2",30,4.7,7.3));
+    CurrentManager->waiterlist.insert(QString::fromStdString(wa.showName()),wa);
     LoginDialog ldl;
     MainWindow w;
     SuperUserDialog l;

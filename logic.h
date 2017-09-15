@@ -9,6 +9,7 @@
 #include <QMessageBox>
 #include <QDebug>
 #include <QTime>
+#include <vector>
 using namespace std;
 
 static bool createConnection()
@@ -101,17 +102,19 @@ class DishMessage{
  public:
     int tablenumber;
     string dishname;
-    DishMessage(int tab,string dd):tablenumber(tab),dishname(dd){};
-    DishMessage(){};
+    DishMessage(int tab,string dd):tablenumber(tab),dishname(dd){}
+    DishMessage(){}
 };
 
 class CustomerMessage{
 public:
     string tablenumber;
     string things;
-    CustomerMessage(string tab,string th):tablenumber(tab),things(th){};
-    CustomerMessage(){};
+    CustomerMessage(string tab,string th):tablenumber(tab),things(th){}
+    CustomerMessage(){}
 };
+
+class Waiter;
 
 template <class T>
 class linkedlist;
@@ -135,7 +138,7 @@ node<T>::node(T d,node<T>* next):next(next),data(d)
 {
 }
 template <class T>
-node<T>* node<T>::nextNode()
+node< T >* node<T>::nextNode()
 {
     return next;
 }
@@ -165,8 +168,6 @@ class linkedlist
 public:
     linkedlist();
     ~linkedlist();
-    linkedlist(linkedlist<T> &L);
-    linkedlist<T> &operator=(linkedlist<T> &L);
     int getSize()const;//返回链表中的元素个数
     bool isEmpty()const;//链表是否为空
     void reset(int pos=0);//初始化游标的位置（第一位数的位置设为0)
@@ -423,20 +424,28 @@ private:
 };
 
 
-
-
 class Waiter{
 public:
-    Waiter(string n = "waiter",string p ="1",int s=0):score(s),name(n),pwd(p){};
+    Waiter(string n = "waiter",string p ="1",float s=0,int ac=0):score(s),name(n),pwd(p),acount(ac){}
     void rating(int sc);
     string showName();
     string showPwd();
+    float showscore();
+    float showtime();
     linkedlist<DishMessage> dm;
     linkedlist<CustomerMessage> cm;
+    int acount;
 private:
     float score;
     string name;
     string pwd;
+};
+
+
+class Manager{
+public:
+    Manager(){}
+    linkedlist<Chef> cheflist;
 };
 
 enum TableStatus{Empty,Full};
@@ -445,7 +454,7 @@ enum TableStatus{Empty,Full};
 
 class Table: public DQueue{
 public:
-    Table(int number = 0,TableStatus r=Empty):t(r),Number(number),u(NULL),surveice(0){};
+    Table(int number = 0,TableStatus r=Empty):t(r),Number(number),u(NULL),surveice(0){}
     void StartWorking(User* uu);
     void init(int n);
     void addDish(Dish item);
@@ -486,4 +495,5 @@ extern Table t[30];
 extern Table* CurrentTable;
 extern Chef* CurrentChef;
 extern Waiter* CurrentWaiter;
+extern Manager* CurrentManager;
 #endif // LOGIC_H

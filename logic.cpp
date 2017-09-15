@@ -247,6 +247,9 @@ void Waiter::rating(int sc){
     else score = (sc+score)/2;
 }
 
+float Waiter::showscore(){
+    return score;
+}
 
 Chef* CurrentChef;
 SuperUser ww;
@@ -254,3 +257,4 @@ User* CurrentUser;
 Table t[30];
 Table* CurrentTable = 0;
 Waiter* CurrentWaiter;
+Manager* CurrentManager;

@@ -35,6 +35,7 @@ void Uitable::on_pushButton_clicked()
         CurrentTable->StartWorking(CurrentUser);
     }
     else {
+        CurrentWaiter->acount++;
         tp->surveice = CurrentWaiter;
         ui->pushButton->setEnabled(false);
     }

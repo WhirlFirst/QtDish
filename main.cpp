@@ -8,6 +8,7 @@
 #include <QSqlQuery>
 #include "chefdialog.h"
 #include "waiterdialog.h"
+#include "chiefdialog.h"
 int main(int argc, char *argv[])
 {
     Waiter wa;
@@ -68,11 +69,14 @@ int main(int argc, char *argv[])
     t[6].showSingle()->changeStatus(Onqueue);
     ww.u.insert(p);
     qDebug() <<"finish";
+    CurrentManager = new Manager;
+    CurrentManager->cheflist.insertRear(Chef("chef1","2",30,4.7,7.3));
     LoginDialog ldl;
     MainWindow w;
     SuperUserDialog l;
     chefDialog che;
     waiterDialog wati;
+    chiefDialog management;
     int xxx =ldl.exec();
     if(xxx == 1){
         w.fresh();
@@ -89,6 +93,10 @@ int main(int argc, char *argv[])
         CurrentWaiter = &wa;
         wati.showui();
         wati.show();
+    }
+    else if(xxx==5){
+        management.freshdata();
+        management.show();
     }
     return a.exec();
 }

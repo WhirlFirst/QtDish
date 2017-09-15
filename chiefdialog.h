@@ -14,7 +14,7 @@ class chiefDialog : public QDialog
 public:
     explicit chiefDialog(QWidget *parent = 0);
     ~chiefDialog();
-
+    void freshdata();
 private:
     Ui::chiefDialog *ui;
 };

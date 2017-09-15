@@ -42,12 +42,15 @@ void LoginDialog::on_loginBtn_clicked()
     if(name == "whirl"&&pwd == "1"){
         done(2);
     }
-    if(name == "chef"&&pwd == "1"){
+    else if(name == "chef"&&pwd == "1"){
         CurrentChef = new Chef("chef","1",0,0,0);
         done(3);
     }
-    if(name == "waiter"&&pwd =="1"){
+    else if(name == "waiter"&&pwd =="1"){
         done(4);
+    }
+    else if(name == "manager"&&pwd =="1"){
+        done(5);
     }
     else{
         for(int i =0;i<ww.u.size();i++){

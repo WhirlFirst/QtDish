@@ -45,17 +45,15 @@ void waiterDialog::tablefresh(){
             utable[i]->disable();
             }
         }
-    CurrentWaiter->cm.reset();
-    CurrentWaiter->dm.reset();
-    for(int f=0;CurrentWaiter->cm.getSize();f++){
-        CustomerMessage* cc = CurrentWaiter->cm.ShowSingle();
-        QMessageBox::information(this, tr("提示"),QString::fromStdString(cc->tablenumber).append(tr("号桌:")).append(QString::fromStdString(cc->things)),QMessageBox::Yes);
-        CurrentWaiter->cm.deleteFront();
+    QMap<string,string>::iterator iit;
+    for(iit = CurrentWaiter->cm.begin();iit!= CurrentWaiter->cm.end();iit++){;
+        QMessageBox::information(this, tr("提示"),QString::fromStdString(iit.key()).append(tr("号桌:")).append(QString::fromStdString(iit.value())),QMessageBox::Yes);
+        CurrentWaiter->cm.remove(iit.key());
     }
-    for(int f=0;CurrentWaiter->dm.getSize();f++){
-        DishMessage* cc = CurrentWaiter->dm.ShowSingle();
-        QMessageBox::information(this, tr("提示"),QString::number(cc->tablenumber).append(tr("号桌:")).append(QString::fromStdString(cc->dishname)).append(tr("已做好")),QMessageBox::Yes);
-        CurrentWaiter->dm.deleteFront();
+    QMap<int,string>::iterator it;
+    for(it = CurrentWaiter->dm.begin();it!= CurrentWaiter->dm.end();it++){
+        QMessageBox::information(this, tr("提示"),QString::number(it.key()).append(tr("号桌:")).append(QString::fromStdString(it.value())).append(tr("已做好")),QMessageBox::Yes);
+        CurrentWaiter->dm.remove(it.key());
     }
     ui->tablenumber->setText(QString::number(CurrentWaiter->acount).append(tr("桌")));
 }

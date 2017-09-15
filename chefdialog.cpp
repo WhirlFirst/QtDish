@@ -81,7 +81,7 @@ void chefDialog::on_finishbtn_clicked()
        emit CurrentChef->finishworking();
         int q=CurrentChef->showdishnumber();
        CurrentWaiter = t[q].surveice;
-       CurrentWaiter->dm.insertRear(DishMessage(q,CurrentChef->cookingDish->showName()));
+       CurrentWaiter->dm.insert(q,CurrentChef->cookingDish->showName());
     }
        QMessageBox::information(this,tr("厉害"),tr("平均用时：").append(QString::number(CurrentChef->showtime()).append(tr("s"))),QMessageBox::Yes);
        ui->numberlabel->setText(QString::number(CurrentChef->showdishnumber()));

@@ -12,8 +12,8 @@
 int main(int argc, char *argv[])
 {
     Waiter wa;
-    wa.cm.insertRear(CustomerMessage("5","加水"));
-    wa.dm.insertRear(DishMessage(5,"土豆丝"));
+    wa.cm.insert("5","加水");
+    wa.dm.insert(5,"土豆丝");
     for(int i=0;i<30;i++){
         t[i].init(i);
         t[i].setwaiter(&wa);
@@ -36,9 +36,9 @@ int main(int argc, char *argv[])
     ww.menu.insert(h);
     ww.menu.insert(q);
     ww.menu.insert(du);
-    ww.menu.insert(ac);
-    ww.menu.insert(b);
-    ww.menu.insert(c);
+    //ww.menu.insert(ac);
+    //ww.menu.insert(b);
+    //ww.menu.insert(c);
     //ww.chef.insertRear(x);
     QApplication a(argc, argv);
 //    if (!createConnection())  qDebug() <<"error";

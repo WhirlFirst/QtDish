@@ -23,6 +23,7 @@ void MainWindow::createnextbtn(){
     next->setGeometry(440,650,93,28);
     next->setText(tr("下一页"));
     connect(next,SIGNAL(clicked()),this,SLOT(nextpagedish()));
+    if(ww.menu.size()<9) next->setEnabled(false);
     next->show();
 }
 
@@ -221,7 +222,7 @@ void MainWindow::on_PayBtn_clicked()
 {
     PayDialog pa;
     if(pa.exec() ==QDialog::Accepted){
-        this->hide();
+        this->close();
         WaitDialog w;
         if(w.exec() == QDialog::Accepted){
             this->close();

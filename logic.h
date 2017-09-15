@@ -432,8 +432,8 @@ public:
     string showName();
     string showPwd();
     float showscore();
-    linkedlist<DishMessage> dm;
-    linkedlist<CustomerMessage> cm;
+    QMap<int,string> dm;
+    QMap<string,string> cm;
     int acount;
 private:
     float score;

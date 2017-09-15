@@ -43,7 +43,7 @@ void WaitDialog::on_Dishviewbtn_clicked()
 
 void WaitDialog::on_servicebtn_clicked()
 {
-    CurrentWaiter->cm.insertRear(CustomerMessage(CurrentTable->showNumber(),"beckon"));
+    CurrentWaiter->cm.insert(CurrentTable->showNumber(),"beckon");
 }
 
 void WaitDialog::on_btn1_clicked()

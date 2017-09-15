@@ -16,6 +16,7 @@ PayDialog::PayDialog(QWidget *parent) :
     QStringListModel* model = new QStringListModel(this);
     model->setStringList(data);
     ui->DishlistView->setModel(model);
+    ui->costlabel->setText(QString::number(CurrentUser->showCost()).append(tr("元")));
 }
 
 PayDialog::~PayDialog()

@@ -19,14 +19,21 @@ WaitDialog::~WaitDialog()
     if(waiterdialogflag==1){
         QSqlQuery query;
         QMap<string,string>::iterator iit;
-        for(iit = CurrentWaiter->cm.begin();iit!= CurrentWaiter->cm.end();iit++){
-            query.prepare("insert into message? (number,thing) values(?,?)");
+        if(CurrentWaiter!=0){
+            query.prepare("select * from message? order by number desc limit 1");
             query.addBindValue(QString::fromStdString(CurrentTable->showNumber()).toInt());
-            query.addBindValue(QString::number(messageflag));
-            query.addBindValue(QString::fromStdString(iit.value()));
-            query.exec();
-            qDebug()<<QString::fromStdString(iit.value());
-            messageflag++;
+            while(query.next()){
+                messageflag = query.value(0).toInt();
+            }
+            for(iit = CurrentWaiter->cm.begin();iit!= CurrentWaiter->cm.end();iit++){
+                query.prepare("insert into message? (number,thing) values(?,?)");
+                query.addBindValue(QString::fromStdString(CurrentTable->showNumber()).toInt());
+                query.addBindValue(QString::number(messageflag));
+                query.addBindValue(QString::fromStdString(iit.value()));
+                query.exec();
+                qDebug()<<QString::fromStdString(iit.value());
+                messageflag++;
+            }
         }
     }
     delete ui;

@@ -82,11 +82,16 @@ void MainWindow::on_sTableBtn_clicked()
             connect(utable[i],SIGNAL(select()),this,SLOT(msg()));
          }
          int i =0;
-         tablefresh();
             for(int p=0;p<10;p++){
                 for(int k=0;k<3;k++){
                     layout->addWidget(utable[i],p,k,1,1);
                     i++;
+                }
+            }
+            for(int i=0;i<30;i++){
+                if(utable[i]->tp->showStatus()== "Full") {
+                    utable[i]->setStyleSheet("background-color:grey;");
+                    utable[i]->disable();
                 }
             }
             flag=2;

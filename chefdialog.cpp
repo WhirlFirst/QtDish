@@ -38,13 +38,23 @@ chefDialog::~chefDialog()
             }
         }
         QMap<int,string>::iterator iit;
-        for(iit = CurrentWaiter->dm.begin();iit!= CurrentWaiter->dm.end();iit++){
-            query.prepare("insert into message? (number,thing) values(?,?)");
-            query.addBindValue(QString::number(iit.key()));
-            query.addBindValue(QString::number(messageflag));
-            query.addBindValue(QString::fromStdString(iit.value()));
-            query.exec();
-            messageflag++;
+        if(CurrentWaiter !=0){
+
+            for(iit = CurrentWaiter->dm.begin();iit!= CurrentWaiter->dm.end();iit++){
+                query.prepare("select * from message? order by number desc limit 1");
+                query.addBindValue(QString::number(iit.key()).toInt());
+                query.exec();
+                while(query.next()){
+                    messageflag = query.value(0).toInt();
+                }
+                qDebug()<<QString::fromStdString(iit.value());
+                query.prepare("insert into message? (number,thing) values(?,?)");
+                query.addBindValue(QString::number(iit.key()).toInt());
+                query.addBindValue(QString::number(messageflag));
+                query.addBindValue(QString::fromStdString(iit.value()));
+                query.exec();
+                messageflag++;
+            }
         }
     }
     delete ui;
@@ -78,8 +88,9 @@ void chefDialog::on_finishbtn_clicked()
     row1 = s->currentRow();
     if(row1>=0){
        emit CurrentChef->finishworking();
-        int q=CurrentChef->showdishnumber();
+        int q=s->item(row1,1)->text().toInt();
        CurrentWaiter = t[q].surveice;
+       qDebug()<<QString::number(q)<<QString::fromStdString(CurrentWaiter->showName());
        CurrentWaiter->dm.insert(q,CurrentChef->cookingDish->showName().toStdString());
     }
        QMessageBox::information(this,tr("厉害"),tr("平均用时：").append(QString::number(CurrentChef->showtime()).append(tr("s"))),QMessageBox::Yes);
@@ -125,8 +136,20 @@ void chefDialog::reloaddata(){
             t[i].initdish(Dish(value1.toInt(),value0,sco,e));
         }
     }
-
-
+    for(int j =0;j<30;j++){
+        query.exec(QString("select * from ttable where number = %1").arg(j));
+        QString wawa;
+         while (query.next()) {
+            wawa = query.value(3).toString();
+         }
+        WaiterMap::iterator m =  ww.waitermap.find(wawa);
+        if(wawa!=0){
+            qDebug()<<wawa;
+            if(QString::fromStdString(m.value().showName())==wawa)
+                CurrentWaiter = &m.value();
+        }
+        t[j].surveice = CurrentWaiter;
+    }
     QStringList headers;
     QTableWidget* s = ui->tableWidget;
     s->setColumnCount(2);

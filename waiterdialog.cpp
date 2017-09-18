@@ -126,7 +126,7 @@ void waiterDialog::tablefresh(){
     }
     QMap<int,string>::iterator it;
     for(it = CurrentWaiter->dm.begin();it!= CurrentWaiter->dm.end();it++){
-        QMessageBox::information(this, tr("提示"),QString::number(it.key()).append(tr("号桌:")).append(QString::fromStdString(it.value()))),QMessageBox::Yes);
+        QMessageBox::information(this, tr("提示"),QString::number(it.key()).append(tr("号桌:")).append(QString::fromStdString(it.value())),QMessageBox::Yes);
         CurrentWaiter->dm.remove(it.key());
     }
     ui->tablenumber->setText(QString::number(CurrentWaiter->acount).append(tr("桌")));

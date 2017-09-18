@@ -73,34 +73,35 @@ int main(int argc, char *argv[])
         qDebug()<<value0<<value1;
         ww.waitermap.insert(value0,Waiter(value0.toStdString(),value1,sco,acount));
     }
-//    for(int i=0;i<30;i++){
-//        ww.u.reset();
-//        query.prepare("insert into ttable (number,name,status,waiter) values(?,?,?,?)");
-//        query.addBindValue(QString::number(i));
-//        query.addBindValue(ww.u.showSingle()->showName());
-//        query.addBindValue("Empty");
-//        query.addBindValue(ww.waitermap.first().showName());
-//        query.exec();
-//    } init database ttable;
 
-//    while(query.next())
-//    {
-//        QString value0 = query.value(0).toString();
-//        QString value1 = query.value(1).toString();
-//        float atime = query.value(2).toFloat();
-//        float ascore = query.value(3).toFloat();
-//        float number = query.value(4).toFloat();
-//        ww.chefmap.insert(value0,Chef(value0,value1,number,ascore,atime));
-//    }
+    for(int i=0;i<30;i++){
+        query.exec(QString("select * from ttable where number = %1").arg(i));
+        User* y=0;
+        while(query.next())
+        {
+            QString username = query.value(1).toString();
+            ww.u.reset();
+            for(int d =0;d<ww.u.size();d++){
+                y = ww.u.showSingle();
+                if(y->showName() == username)
+                    break;
+            }
+            if(y!=0) t[i].StartWorking(y);
+             QString sta = query.value(2).toString();
+             TableStatus q;
+             if(sta == "Empty") q=Empty;
+             if(sta == "Full")  q =Full;
+            QString waitername = query.value(3).toString();
+            if(waitername == 0){
+            }
+            else{
+                WaiterMap::iterator it;
+                it = ww.waitermap.find(waitername);
+                t[i].setwaiter(&(it.value()));
+            }
+        }
+    }
     User p("test","1","1");
-    t[5].StartWorking(&p);
-    t[6].StartWorking(&p);
-    t[5].addDish(h);
-    t[5].reset();
-    t[5].showSingle()->changeStatus(Onqueue);
-    t[6].addDish(c);
-    t[6].reset();
-    t[6].showSingle()->changeStatus(Onqueue);
     CurrentManager = new Manager;
     CurrentManager->cheflist.insertRear(Chef("chef1","2",30,4.7,7.3));
     CurrentManager->waiterlist.insert(QString::fromStdString(wa.showName()),wa);
@@ -158,6 +159,7 @@ int main(int argc, char *argv[])
        l.show();
     }
     else if(xxx==3){
+
         che.reloaddata();
         chefdialogflag= 1;
         che.fresh();

@@ -25,7 +25,7 @@ void chiefDialog::freshdata(){
     QTableWidget* s = ui->cheftableWidget;
     s->clear();
     s->setColumnCount(3);
-    s->setRowCount(CurrentManager->cheflist.getSize());
+    s->setRowCount(ww.chefmap.size());
     headers << "厨师姓名" << "平均用时"<<"评分";
     s->setHorizontalHeaderLabels(headers);
     s->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -33,12 +33,13 @@ void chiefDialog::freshdata(){
     s->setShowGrid(true);
     s->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     s->resizeRowsToContents();
-    CurrentManager->cheflist.reset();
-    for(int i=0;i<CurrentManager->cheflist.getSize();i++){
-        Chef* p =CurrentManager->cheflist.ShowSingle();
-        s->setItem(i,0,new QTableWidgetItem(p->showname()));
-        s->setItem(i,1,new QTableWidgetItem(QString::number(p->showtime())));
-        s->setItem(i,2,new QTableWidgetItem(QString::number(p->showscore())));
+    ChefMap::iterator cd ;
+    int i=0;
+    for(cd = ww.chefmap.begin();cd!= ww.chefmap.end();cd++){
+        s->setItem(i,0,new QTableWidgetItem(cd.value().showname()));
+        s->setItem(i,1,new QTableWidgetItem(cd.value().showtime()));
+        s->setItem(i,2,new QTableWidgetItem(QString::number(cd.value().showscore())));
+        i++;
     }
     s->show();
 
@@ -46,7 +47,7 @@ void chiefDialog::freshdata(){
     QTableWidget* sw = ui->waitertableWidget;
     sw->clear();
     sw->setColumnCount(3);
-    sw->setRowCount(CurrentManager->waiterlist.size());
+    sw->setRowCount(ww.waitermap.size());
     headerswaiter << "服务员姓名" << "服务总数"<<"评分";
     sw->setHorizontalHeaderLabels(headerswaiter);
     sw->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -56,7 +57,7 @@ void chiefDialog::freshdata(){
     sw->resizeRowsToContents();
     WaiterMap::iterator it;
     int yy =0;
-    for(it = CurrentManager->waiterlist.begin();it!=CurrentManager->waiterlist.end();it++){
+    for(it = ww.waitermap.begin();it!=ww.waitermap.end();it++){
         sw->setItem(yy,0,new QTableWidgetItem(QString::fromStdString(it.value().showName())));
         sw->setItem(yy,1,new QTableWidgetItem(QString::number(it.value().acount)));
         sw->setItem(yy,2,new QTableWidgetItem(QString::number(it.value().showscore())));

@@ -37,14 +37,11 @@ void MainWindow::createfrontbtn(){
 
 
 void MainWindow::fresh(){
-     ui->Userlabel->setText(QString::fromStdString(CurrentUser->showName()));
+     ui->Userlabel->setText(CurrentUser->showName());
 }
 
 void MainWindow::moneyfresh(){
-    QString p("总计：");
-    p.append(QString::number(CurrentUser->showCost()));
-    p.append("元");
-    ui->moneylabel->setText(p);
+    ui->moneylabel->setText(QString::number(CurrentUser->showCost()).append(tr("元")));
 }
 
 MainWindow::~MainWindow()
@@ -59,6 +56,9 @@ void MainWindow::on_actionSign_out_triggered()
 }
 
 int flag=0;
+
+
+
 void MainWindow::tablefresh(){
     for(int i=0;i<30;i++){
         if(utable[i]->tp->showStatus()== "Full") {
@@ -182,38 +182,40 @@ void MainWindow::frontpagedish(){
 void MainWindow::on_sDishBtn_clicked()
 {
     if(CurrentTable== 0) QMessageBox::warning(this, tr("哎呀"),tr("请先选桌"),QMessageBox::Yes);
-    if(flag==4) ;
     else{
-        QGridLayout *layout = ui->gridLayout_2;
-        for(int i=0;i<30;i++){
-            layout->removeWidget(utable[i]);
-        utable[i]->deleteLater();
-        }
-        flag =1;
-        ww.menu.reset();
-        for(int i=0;i<9;i++){
-            udish[i]= new UiDish(this);
-            udish[i]->btninit();
-         }
-        for(int p=0;p<ww.menu.size()&&p<9;p++){
-            Dish* temp =ww.menu.showSingle();
-            udish[p]->setDish(temp);
-            udish[p]->setlabel(temp->showName());
-            udish[p]->setprice(temp->showPrice());
-            udish[p]->setBtnabled(true);
-            connect(udish[p],SIGNAL(newdish()),this,SLOT(moneyfresh()));
-        }
-        int x =0;
-           for(int p=0;p<3;p++){
-               for(int k=0;k<3;k++){
-                   if(udish[x]->d != 0) layout->addWidget(udish[x],p,k,1,1);
-                   else udish[x]->hide();
-                   x++;
+        if(flag==4) ;
+        else{
+            QGridLayout *layout = ui->gridLayout_2;
+            for(int i=0;i<30;i++){
+                layout->removeWidget(utable[i]);
+            utable[i]->deleteLater();
+            }
+            flag =1;
+            ww.menu.reset();
+            for(int i=0;i<9;i++){
+                udish[i]= new UiDish(this);
+                udish[i]->btninit();
+             }
+            for(int p=0;p<ww.menu.size()&&p<9;p++){
+                Dish* temp =ww.menu.showSingle();
+                udish[p]->setDish(temp);
+                udish[p]->setlabel(temp->showName());
+                udish[p]->setprice(temp->showPrice());
+                udish[p]->setBtnabled(true);
+                connect(udish[p],SIGNAL(newdish()),this,SLOT(moneyfresh()));
+            }
+            int x =0;
+               for(int p=0;p<3;p++){
+                   for(int k=0;k<3;k++){
+                       if(udish[x]->d != 0) layout->addWidget(udish[x],p,k,1,1);
+                       else udish[x]->hide();
+                       x++;
+                   }
                }
-           }
-        createnextbtn();
-        createfrontbtn();
-        flag=4;
+            createnextbtn();
+            createfrontbtn();
+            flag=4;
+        }
     }
 }
 
@@ -224,6 +226,8 @@ void MainWindow::on_PayBtn_clicked()
     if(pa.exec() ==QDialog::Accepted){
         this->close();
         WaitDialog w;
+        waiterdialogflag=1;
+        w.fresh();
         if(w.exec() == QDialog::Accepted){
             this->close();
         }

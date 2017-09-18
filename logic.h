@@ -13,21 +13,6 @@
 #include <QMap>
 using namespace std;
 
-static bool createConnection()
-{
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName("dish.db");
-    if (!db.open()) {
-        return false;
-        qDebug()<<"no";
-    }
-    QSqlQuery query;
-    query.exec("create table dish (name varchar(30) , "
-               "int price primary key");
-    qDebug()<<"finish";
-    return true;
-}
-
 enum Status
 {
     Notchoose,
@@ -40,49 +25,49 @@ enum Status
 class User{
 public:
     User(){};
-    User(string na,string num,string pw,int x=0):name(na),number(num),pwd(pw),cost(x){};
+    User(QString na,QString num,QString pw,int x=0):name(na),number(num),pwd(pw),cost(x){};
     void addCost(int x);
     void reduceCost(int x);
     friend class SuperUser;
-    int showCost();
-    string showName();
+    float showCost();
+    QString showName();
     friend class UQueue;
-    string checknumber();
-    string checkpwd();
+    QString checknumber();
+    QString checkpwd();
 private:
-    string name;
-    string number;
-    string pwd;
+    QString name;
+    QString number;
+    QString pwd;
     int cost;
 };
 
 class Dish
 {
 public:
-    Dish(int p=0,string Name = "tudousi",Status ss = Notchoose);
+    Dish(int p=0,QString Name = "tudousi",float sc = 5,Status ss = Notchoose);
     void changeStatus(Status s);
-    string showStatus() const;
-    string showName() const;
-    int Evaluation(int sc); //评价菜品并返回评价完后平均分
+    QString showStatus() const;
+    QString showName() const;
+    float Evaluation(float sc); //评价菜品并返回评价完后平均分
     int showPrice();
-    int showScore();
+    float showScore();
 private:
     Status sta;
-    string DishName;
-    int score;
+    QString DishName;
+    float score;
     int price;
 };
 
 class Chef{
 public:
     void startworking(Dish* p);
-    Chef(string n = "chef",string p = "1",int number =0,float score = 0,float time=0);
+    Chef(QString n = "chef",QString p = "1",int number =0,float score = 0,float time=0);
     void initdata(int number,int score,int time);
     float showscore();
     float showdishnumber();
     float showtime();
-    string showname();
-    string showpwd();
+    QString showname();
+    QString showpwd();
     void settablenumber(int u);
     Dish* cookingDish;
 signals:
@@ -93,8 +78,8 @@ private:
     float dishnumber;
     QTime t;
     int dishtablenumber;
-    string name;
-    string pwd;
+    QString name;
+    QString pwd;
 };
 
 
@@ -181,12 +166,12 @@ public:
     //void insertAfter(Dish item);//在当前结点之后插入结点
     T deleteFront();//删除头结点
     void deleteCurrent();//删除当前结点
-    const Dish&data()const;//返回对当前结点成员数据的常引用
+    const T& data()const;//返回对当前结点成员数据的常引用
     //清空链表：释放所有结点的内存空间。被析构函数和“operator ="调用
     void clear();
     void determine();
-    int searchDish(string DishName);
-    T* deletedata(string DishName);
+    int searchDish(QString DishName);
+    T* deletedata(QString DishName);
     void Show();
     T* ShowSingle(); //从头开始显示data，每显示一个后再把当前指针向后移动一位
 private:
@@ -235,7 +220,7 @@ int linkedlist<T>::getSize()const//返回链表中的元素个数
     return size;
 }
 template <class T>
-const Dish& linkedlist<T>::data()const//返回对当前结点成员数据的常引用
+const T& linkedlist<T>::data()const//返回对当前结点成员数据的常引用
 {
     return currPtr->data;
 }
@@ -322,7 +307,7 @@ void linkedlist<T>::clear()//清空链表：释放所有结点的内存空间。
     currPtr=prevPtr=front;
 }
 template <class T>
-int linkedlist<T>::searchDish(string name){
+int linkedlist<T>::searchDish(QString name){
     int k=0;
     prevPtr=front;
     currPtr=front->nextNode();
@@ -335,7 +320,7 @@ int linkedlist<T>::searchDish(string name){
     return k;
 }
 template <class T>
-T* linkedlist<T>::deletedata(string DishName){
+T* linkedlist<T>::deletedata(QString DishName){
     prevPtr=front;
     currPtr=front->nextNode();
     for(int i=0;i<size;i++)
@@ -358,7 +343,6 @@ void linkedlist<T>::Show() {
     prevPtr=front;
     currPtr=front->nextNode();
     for (int i = 0; i < size; ++i) {
-        cout<<currPtr->data.showName()<<endl;
         prevPtr=currPtr;
         currPtr=currPtr->nextNode();
     }
@@ -389,10 +373,10 @@ public:
     void insert(Dish item);
     Dish remove();
     void clear();
-    void deletedata(string name);
+    void deletedata(QString name);
     const Dish &peek() const ;
     bool isEmpty() const ;
-    int searchDish(string name);
+    int searchDish(QString name);
 
     void showAllDish();
     Dish* showSingle();
@@ -410,10 +394,10 @@ public:
     void insert(User item);
     Dish remove();
     void clear();
-    void deletedata(string name);
+    void deletedata(QString name);
     const Dish &peek() const ;
     bool isEmpty() const ;
-    int searchUser(string name);
+    int searchUser(QString name);
     void showAllUser();
     void reset(int n=0);
     void deletecurrent();
@@ -427,10 +411,10 @@ private:
 
 class Waiter{
 public:
-    Waiter(string n = "waiter",string p ="1",float s=0,int ac=0):score(s),name(n),pwd(p),acount(ac){}
+    Waiter(string n = "waiter",QString p ="1",float s=0,int ac=0):score(s),name(n),pwd(p),acount(ac){}
     void rating(int sc);
-    string showName();
-    string showPwd();
+    string showName() const;
+    QString showPwd();
     float showscore();
     QMap<int,string> dm;
     QMap<string,string> cm;
@@ -438,7 +422,7 @@ public:
 private:
     float score;
     string name;
-    string pwd;
+    QString pwd;
 };
 
 typedef QMap<QString, Waiter> WaiterMap;
@@ -461,8 +445,9 @@ public:
     void init(int n);
     void addDish(Dish item);
     void deleteDish(Dish item);
-    void rateing();
+    void rating();
     void setwaiter(Waiter* f);
+    void initdish(Dish item);
     string showNumber();
     string showStatus();
     Waiter* surveice;
@@ -499,4 +484,8 @@ extern Table* CurrentTable;
 extern Chef* CurrentChef;
 extern Waiter* CurrentWaiter;
 extern Manager* CurrentManager;
+extern int databaseflag;
+extern int messageflag;
+extern int waiterdialogflag;
+extern int chefdialogflag;
 #endif // LOGIC_H

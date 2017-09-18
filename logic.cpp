@@ -6,18 +6,18 @@ void User::addCost(int x) {
 void User::reduceCost(int x) {
     cost = cost-x;
 }
-int User::showCost() {
+float User::showCost() {
     return cost;
 }
-string User::showName(){
+QString User::showName(){
     return name;
 }
 
-string User::checknumber(){
+QString User::checknumber(){
     return number;
 }
 
-string User::checkpwd(){
+QString User::checkpwd(){
     return pwd;
 }
 
@@ -25,15 +25,15 @@ string User::checkpwd(){
 int Dish::showPrice() {
     return price;
 }
-Dish::Dish(int p,string Name,Status ss):sta(ss),DishName(Name),score(0),price(p){
+Dish::Dish(int p,QString Name,float sc,Status ss):sta(ss),DishName(Name),score(sc),price(p){
 }
 void Dish::changeStatus(Status s){
     sta = s;
 }
-string Dish::showName() const{
+QString Dish::showName() const{
     return DishName;
 }
-string Dish::showStatus() const{
+QString Dish::showStatus() const{
     switch (sta)
     {
         case 0:
@@ -56,17 +56,17 @@ string Dish::showStatus() const{
             break;
     }
 }
-int Dish::Evaluation(int sc){
+float Dish::Evaluation(float sc){
     if(score==0) score= sc;
     else score = (score+ sc)/2;
     return score;
 }
 
-int Dish::showScore(){
+float Dish::showScore(){
     return score;
 }
 
-Chef::Chef(string n, string p, int number, float score, float time){
+Chef::Chef(QString n, QString p, int number, float score, float time){
     name =n;
     pwd = p;
     averagetime = time;
@@ -110,11 +110,11 @@ void Chef::finishworking(){
    cookingDish->changeStatus(Finshed);
 }
 
-string Chef::showname(){
+QString Chef::showname(){
     return name;
 }
 
-string Chef::showpwd(){
+QString Chef::showpwd(){
     return pwd;
 }
 
@@ -138,7 +138,7 @@ void Table::deleteDish(Dish item) {
     deletedata(item.showName());
     u->reduceCost(item.showPrice());
 }
-void Table::rateing() {
+void Table::rating() {
     showAllDish();
 }
 
@@ -161,13 +161,18 @@ void Table::setwaiter(Waiter* p){
     surveice = p;
 }
 
+
+void Table::initdish(Dish item){
+    insert(item);
+}
+
 void UQueue::insert(User item){
     u.insertRear(item);
 }
 void UQueue::clear(){
     u.clear();
 }
-void UQueue::deletedata(string name){
+void UQueue::deletedata(QString name){
     u.deletedata(name);
 }
 void UQueue::showAllUser(){
@@ -200,13 +205,12 @@ int UQueue::currentposition(){
 
 void DQueue::insert(Dish item) {
     qu.insertRear(item);
-    //item.changeStatus(Onqueue);
     qu.reset();
 }
-int DQueue::searchDish(string name){
+int DQueue::searchDish(QString name){
     return qu.searchDish(name);
 }
-void DQueue::deletedata(string name){
+void DQueue::deletedata(QString name){
     Dish* de = qu.deletedata(name);
     de->changeStatus(Notchoose);
 }
@@ -251,11 +255,11 @@ float Waiter::showscore(){
     return score;
 }
 
-string Waiter::showName(){
+string Waiter::showName() const{
     return name;
 }
 
-string Waiter::showPwd(){
+QString Waiter::showPwd(){
     return pwd;
 }
 
@@ -266,3 +270,7 @@ Table t[30];
 Table* CurrentTable = 0;
 Waiter* CurrentWaiter;
 Manager* CurrentManager;
+int databaseflag=0;
+int messageflag=0;
+int waiterdialogflag = 0;
+int chefdialogflag=0;

@@ -16,7 +16,7 @@ class UiDish : public QWidget
 public:
     explicit UiDish(QWidget *parent = 0);
     ~UiDish();
-    void setlabel(string n);
+    void setlabel(QString n);
     void setprice(int pri);
     void setDish(Dish* dp);
     void setBtnabled(bool p= false);

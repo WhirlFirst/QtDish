@@ -15,7 +15,7 @@ addDishDialog::~addDishDialog()
 
 void addDishDialog::on_pushButton_clicked()
 {
-    string name = ui->namelineEdit->text().toStdString();
+    QString name = ui->namelineEdit->text();
     int price = ui->pricelineEdit->text().toInt();
     ww.menu.insert(Dish(price,name));
     close();

@@ -15,8 +15,8 @@ addwaiterDialog::~addwaiterDialog()
 
 void addwaiterDialog::on_pushButton_clicked()
 {
-    QString uname = ui->userlineEdit->text();
+    string uname = ui->userlineEdit->text().toStdString();
     QString pw = ui->pwdlineEdit->text();
-    ww.waitermap.insert(uname,Waiter(uname.toStdString(),pw.toStdString()));
+    ww.waitermap.insert(QString::fromStdString(uname),Waiter(uname,pw));
     close();
 }

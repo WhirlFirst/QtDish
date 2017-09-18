@@ -36,7 +36,7 @@ void chiefDialog::freshdata(){
     CurrentManager->cheflist.reset();
     for(int i=0;i<CurrentManager->cheflist.getSize();i++){
         Chef* p =CurrentManager->cheflist.ShowSingle();
-        s->setItem(i,0,new QTableWidgetItem(QString::fromStdString(p->showname())));
+        s->setItem(i,0,new QTableWidgetItem(p->showname()));
         s->setItem(i,1,new QTableWidgetItem(QString::number(p->showtime())));
         s->setItem(i,2,new QTableWidgetItem(QString::number(p->showscore())));
     }

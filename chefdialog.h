@@ -15,6 +15,8 @@ public:
     explicit chefDialog(QWidget *parent = 0);
     ~chefDialog();
     void fresh();
+    void reloaddata();
+    void savedata();
 private slots:
     void on_startbtn_clicked();
 

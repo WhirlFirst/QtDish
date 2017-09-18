@@ -15,6 +15,7 @@ public:
     explicit waiterDialog(QWidget *parent = 0);
     ~waiterDialog();
     void showui();
+    void exit();
 public slots:
     void tablefresh();
 private:

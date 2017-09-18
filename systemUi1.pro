@@ -62,7 +62,8 @@ HEADERS  += mainwindow.h \
     chefdialog.h \
     waiterdialog.h \
     addchefdialog.h \
-    addwaiterdialog.h
+    addwaiterdialog.h \
+    connection.h
 
 FORMS    += mainwindow.ui \
     registerdialog.ui \

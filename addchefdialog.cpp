@@ -17,6 +17,6 @@ void addchefDialog::on_pushButton_clicked()
 {
     QString uname = ui->userlineEdit->text();
     QString pw = ui->pwdlineEdit->text();
-    ww.chefmap.insert(uname,Chef(uname.toStdString(),pw.toStdString()));
+    ww.chefmap.insert(uname,Chef(uname,pw));
     close();
 }

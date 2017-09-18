@@ -12,6 +12,8 @@
 #include "adduserdialog.h"
 #include "addchefdialog.h"
 #include "addwaiterdialog.h"
+#include <QSqlQuery>
+#include "connection.h"
 SuperUserDialog::SuperUserDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::SuperUserDialog)
@@ -23,6 +25,50 @@ SuperUserDialog::SuperUserDialog(QWidget *parent) :
 
 SuperUserDialog::~SuperUserDialog()
 {
+    QSqlQuery query;
+    ww.u.reset();
+    query.exec("DELETE FROM user");
+    for(int i=0;i<ww.u.size();i++){
+        User* s = ww.u.showSingle();
+        query.prepare("insert into user (name,number,password)""values(?,?,?)");
+        query.addBindValue(s->showName());
+        query.addBindValue(s->checknumber());
+        query.addBindValue(s->checkpwd());
+        query.exec();
+    }
+    ww.menu.reset();
+    query.exec("delete from dish");
+    for(int i=0;i<ww.menu.size();i++){
+        Dish* o = ww.menu.showSingle();
+        query.prepare("insert into dish (name,price,status,number,score)""values(?,?,?,?,?)");
+        query.addBindValue(o->showName());
+        query.addBindValue(QString::number(o->showPrice()));
+        query.addBindValue(o->showStatus());
+        query.addBindValue(QString::number(-1));
+        query.addBindValue(QString::number(o->showScore()));
+        query.exec();
+    }
+    query.exec("delete from chef");
+    ChefMap::iterator it;
+    for(it = ww.chefmap.begin();it!= ww.chefmap.end();it++){
+        query.prepare("insert into chef (name,pwd,averagetime,averagescore,dishnumber)""values(?,?,?,?,?)");
+        query.addBindValue(it.value().showname());
+        query.addBindValue(it.value().showpwd());
+        query.addBindValue(QString::number(it.value().showtime()));
+        query.addBindValue(QString::number(it.value().showscore()));
+        query.addBindValue(QString::number(it.value().showdishnumber()));
+        query.exec();
+    }
+    WaiterMap::iterator ie;
+    query.exec("delete from waiter");
+    for(ie = ww.waitermap.begin();ie!= ww.waitermap.end();ie++){
+        query.prepare("insert into waiter(name,pwd,score,acount)""values(?,?,?,?)");
+        query.addBindValue(QString::fromStdString(ie.value().showName()));
+        query.addBindValue(ie.value().showPwd());
+        query.addBindValue(QString::number(ie.value().showscore()));
+        query.addBindValue(QString::number(ie.value().acount));
+        query.exec();
+    }
     delete ui;
 }
 
@@ -43,7 +89,7 @@ void SuperUserDialog::menushow(){
     ww.menu.reset();
     for(int i=0;i<ww.menu.size();i++){
         Dish* p =ww.menu.showSingle();
-        s->setItem(i,0,new QTableWidgetItem(QString::fromStdString(p->showName())));
+        s->setItem(i,0,new QTableWidgetItem(p->showName()));
         s->setItem(i,1,new QTableWidgetItem(QString::number(p->showPrice())));
         s->setItem(i,2,new QTableWidgetItem(QString::number(p->showScore())));
     }
@@ -57,7 +103,7 @@ void SuperUserDialog::fresh(){
     ww.menu.reset();
     for(int i=0;i<ww.menu.size();i++){
         Dish* p =ww.menu.showSingle();
-        s->setItem(i,0,new QTableWidgetItem(QString::fromStdString(p->showName())));
+        s->setItem(i,0,new QTableWidgetItem(p->showName()));
         s->setItem(i,1,new QTableWidgetItem(QString::number(p->showPrice())));
         s->setItem(i,2,new QTableWidgetItem(QString::number(p->showScore())));
     }
@@ -80,9 +126,9 @@ void SuperUserDialog::on_addBtn_clicked()
        ww.u.reset();
        for(int i=0;i<ww.u.size();i++){
            User* p =ww.u.showSingle();
-           s->setItem(i,0,new QTableWidgetItem(QString::fromStdString(p->checknumber())));
-           s->setItem(i,1,new QTableWidgetItem(QString::fromStdString(p->showName())));
-           s->setItem(i,2,new QTableWidgetItem(QString::fromStdString(p->checkpwd())));
+           s->setItem(i,0,new QTableWidgetItem(p->checknumber()));
+           s->setItem(i,1,new QTableWidgetItem(p->showName()));
+           s->setItem(i,2,new QTableWidgetItem(p->checkpwd()));
        }
        s->show();
     }
@@ -94,8 +140,8 @@ void SuperUserDialog::on_addBtn_clicked()
         ChefMap::iterator it;
         int i=0;
         for(it = ww.chefmap.begin();it!= ww.chefmap.end();it++){
-            s->setItem(i,0,new QTableWidgetItem(QString::fromStdString(it.value().showname())));
-            s->setItem(i,1,new QTableWidgetItem(QString::fromStdString(it.value().showpwd())));
+            s->setItem(i,0,new QTableWidgetItem(it.value().showname()));
+            s->setItem(i,1,new QTableWidgetItem(it.value().showpwd()));
             i++;
         }
         s->show();
@@ -109,7 +155,7 @@ void SuperUserDialog::on_addBtn_clicked()
         int i=0;
         for(it = ww.waitermap.begin();it!= ww.waitermap.end();it++){
             s->setItem(i,0,new QTableWidgetItem(QString::fromStdString(it.value().showName())));
-            s->setItem(i,1,new QTableWidgetItem(QString::fromStdString(it.value().showPwd())));
+            s->setItem(i,1,new QTableWidgetItem(it.value().showPwd()));
             i++;
         }
         s->show();
@@ -187,9 +233,9 @@ void SuperUserDialog::on_userbtn_clicked()
     ww.u.reset();
     for(int i=0;i<ww.u.size();i++){
         User* p =ww.u.showSingle();
-        s->setItem(i,0,new QTableWidgetItem(QString::fromStdString(p->checknumber())));
-        s->setItem(i,1,new QTableWidgetItem(QString::fromStdString(p->showName())));
-        s->setItem(i,2,new QTableWidgetItem(QString::fromStdString(p->checkpwd())));
+        s->setItem(i,0,new QTableWidgetItem(p->checknumber()));
+        s->setItem(i,1,new QTableWidgetItem(p->showName()));
+        s->setItem(i,2,new QTableWidgetItem(p->checkpwd()));
     }
     s->show();
     st=2;
@@ -213,8 +259,8 @@ void SuperUserDialog::on_chiefbtn_clicked()
     ChefMap::iterator it;
     int i=0;
     for(it = ww.chefmap.begin();it!= ww.chefmap.end();it++){
-        s->setItem(i,0,new QTableWidgetItem(QString::fromStdString(it.value().showname())));
-        s->setItem(i,1,new QTableWidgetItem(QString::fromStdString(it.value().showpwd())));
+        s->setItem(i,0,new QTableWidgetItem(it.value().showname()));
+        s->setItem(i,1,new QTableWidgetItem(it.value().showpwd()));
         i++;
     }
     s->show();
@@ -240,7 +286,7 @@ void SuperUserDialog::on_waiterbtn_clicked()
     int i=0;
     for(it = ww.waitermap.begin();it!= ww.waitermap.end();it++){
         s->setItem(i,0,new QTableWidgetItem(QString::fromStdString(it.value().showName())));
-        s->setItem(i,1,new QTableWidgetItem(QString::fromStdString(it.value().showPwd())));
+        s->setItem(i,1,new QTableWidgetItem(it.value().showPwd()));
         i++;
     }
     s->show();

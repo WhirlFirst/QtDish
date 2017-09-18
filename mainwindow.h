@@ -20,6 +20,7 @@ public:
 public slots:
     void fresh();
     void msg();
+    void moneyfresh();
 private slots:
     void on_actionSign_out_triggered();
 
@@ -27,7 +28,7 @@ private slots:
 
     void on_sDishBtn_clicked();
     void tablefresh();
-    void moneyfresh();
+
     void nextpagedish();
     void frontpagedish();
     void createnextbtn();

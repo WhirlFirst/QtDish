@@ -25,8 +25,8 @@ DishviewDialog::DishviewDialog(QWidget *parent) :
     CurrentTable->reset();
     for(int i=0;i<CurrentTable->size();i++){
         Dish* p =CurrentTable->showSingle();
-        s->setItem(i,0,new QTableWidgetItem(QString::fromStdString(p->showName())));
-        s->setItem(i,1,new QTableWidgetItem(QString::fromStdString(p->showStatus())));
+        s->setItem(i,0,new QTableWidgetItem(p->showName()));
+        s->setItem(i,1,new QTableWidgetItem(p->showStatus()));
     }
     s->show();
 }
@@ -52,8 +52,8 @@ void DishviewDialog::on_freshbtn_clicked()
     CurrentTable->reset();
     for(int i=0;i<CurrentTable->size();i++){
         Dish* p =CurrentTable->showSingle();
-        s->setItem(i,0,new QTableWidgetItem(QString::fromStdString(p->showName())));
-        s->setItem(i,1,new QTableWidgetItem(QString::fromStdString(p->showStatus())));
+        s->setItem(i,0,new QTableWidgetItem(p->showName()));
+        s->setItem(i,1,new QTableWidgetItem(p->showStatus()));
     }
     s->show();
 }

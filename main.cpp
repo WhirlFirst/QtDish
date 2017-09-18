@@ -9,14 +9,18 @@
 #include "chefdialog.h"
 #include "waiterdialog.h"
 #include "chiefdialog.h"
+#include "connection.h"
+#include "waitdialog.h"
 int main(int argc, char *argv[])
 {
+    QApplication a(argc, argv);
+    if (!createConnection())
+                return 1;
     Waiter wa;
     wa.cm.insert("5","加水");
     wa.dm.insert(5,"土豆丝");
     for(int i=0;i<30;i++){
         t[i].init(i);
-        t[i].setwaiter(&wa);
     }
     Dish d(1010,"abalone");
     Dish fp(10,"chips");
@@ -29,36 +33,66 @@ int main(int argc, char *argv[])
     Dish b(86,"Soy shrimp");
     Dish c(28,"potato floss");
     //Chef x("chef","1");
-    ww.menu.insert(d);
-    ww.menu.insert(fp);
-    ww.menu.insert(f);
-    ww.menu.insert(m);
-    ww.menu.insert(h);
-    ww.menu.insert(q);
-    ww.menu.insert(du);
-    //ww.menu.insert(ac);
-    //ww.menu.insert(b);
-    //ww.menu.insert(c);
-    //ww.chef.insertRear(x);
-    QApplication a(argc, argv);
-//    if (!createConnection())  qDebug() <<"error";
-//    QSqlQuery query;
-//    ww.menu.reset();
-//    for(int i=0;i<ww.menu.size();i++){
-//        Dish* d = ww.menu.showSingle();
-//        query.prepare("insert into dish (name, price) ""values (?, ?)");
-//        query.addBindValue(d->showName().c_str());
-//        query.addBindValue(d->showPrice());
+
+    QSqlQuery query;
+    query.exec("select * from user");
+    while(query.next())
+    {
+        QString value0 = query.value(0).toString();
+        QString value1 = query.value(1).toString();
+        QString value2 = query.value(2).toString();
+        qDebug() << value0 << value1<<value2 ;
+        ww.u.insert(User(value0,value1,value2));
+    }
+    query.exec("select * from dish where number = -1");
+    while(query.next())
+    {
+        QString value0 = query.value(0).toString();
+        QString value1 = query.value(1).toString();
+        float sco = query.value(4).toFloat();
+        qDebug() << value0 << value1 ;
+        ww.menu.insert(Dish(value1.toInt(),value0,sco));
+    }
+    query.exec("select * from chef");
+    while(query.next())
+    {
+        QString value0 = query.value(0).toString();
+        QString value1 = query.value(1).toString();
+        float atime = query.value(2).toFloat();
+        float ascore = query.value(3).toFloat();
+        float number = query.value(4).toFloat();
+        ww.chefmap.insert(value0,Chef(value0,value1,number,ascore,atime));
+    }
+    query.exec("select * from waiter");
+    while(query.next())
+    {
+        QString value0 = query.value(0).toString();
+        QString value1 = query.value(1).toString();
+        float sco = query.value(2).toFloat();
+        int acount = query.value(3).toInt();
+        qDebug()<<value0<<value1;
+        ww.waitermap.insert(value0,Waiter(value0.toStdString(),value1,sco,acount));
+    }
+//    for(int i=0;i<30;i++){
+//        ww.u.reset();
+//        query.prepare("insert into ttable (number,name,status,waiter) values(?,?,?,?)");
+//        query.addBindValue(QString::number(i));
+//        query.addBindValue(ww.u.showSingle()->showName());
+//        query.addBindValue("Empty");
+//        query.addBindValue(ww.waitermap.first().showName());
 //        query.exec();
-//    }
-//    query.exec("select * from dish");
-//    qDebug()<<query.size();
+//    } init database ttable;
+
 //    while(query.next())
-//        {
-//            qDebug() << query.value(0).toString()
-//                           << query.value(1).toInt();
-//        }
-    User p("lulu","18811125508","123");
+//    {
+//        QString value0 = query.value(0).toString();
+//        QString value1 = query.value(1).toString();
+//        float atime = query.value(2).toFloat();
+//        float ascore = query.value(3).toFloat();
+//        float number = query.value(4).toFloat();
+//        ww.chefmap.insert(value0,Chef(value0,value1,number,ascore,atime));
+//    }
+    User p("test","1","1");
     t[5].StartWorking(&p);
     t[6].StartWorking(&p);
     t[5].addDish(h);
@@ -67,10 +101,6 @@ int main(int argc, char *argv[])
     t[6].addDish(c);
     t[6].reset();
     t[6].showSingle()->changeStatus(Onqueue);
-    ww.u.insert(p);
-    qDebug() <<"finish";
-    ww.chefmap.insert("chef1",Chef("chef1","2",30,4.7,7.3));
-    ww.waitermap.insert(QString::fromStdString(wa.showName()),wa);
     CurrentManager = new Manager;
     CurrentManager->cheflist.insertRear(Chef("chef1","2",30,4.7,7.3));
     CurrentManager->waiterlist.insert(QString::fromStdString(wa.showName()),wa);
@@ -80,26 +110,74 @@ int main(int argc, char *argv[])
     chefDialog che;
     waiterDialog wati;
     chiefDialog management;
+    WaitDialog we;
     int xxx =ldl.exec();
     if(xxx == 1){
-        w.fresh();
-        w.show();
+        query.prepare("select * from ttable where name = ?");
+        query.addBindValue(CurrentUser->showName());
+        query.exec();
+        int i=0;
+        QString wawa;
+         while (query.next()) {
+            i = query.value(0).toInt();
+            wawa = query.value(3).toString();
+         }
+        qDebug()<<QString::number(i)<<CurrentUser->showName();
+        qDebug()<<wawa;
+        WaiterMap::iterator m =  ww.waitermap.find(wawa);
+        query.exec(QString("select * from dish%1").arg(i));
+        while (query.next()) {
+            QString name = query.value(0).toString();
+            int pri = query.value(1).toInt();
+            QString sta = query.value(2).toString();
+            float scor = query.value(3).toFloat();
+            Status e;
+            if(sta =="Onqueue") e = Onqueue;
+            else if(sta =="Cooking") e = Cooking;
+            else if(sta =="Finshed") e = Finshed;
+            t[i].initdish(Dish(pri,name,scor,e));
+        }
+        if(t[i].size()>0){
+            if(wawa!=0){
+                if(QString::fromStdString(m.value().showName())==wawa)
+                    CurrentWaiter = &m.value();
+                qDebug()<<QString::fromStdString(CurrentWaiter->showName());
+            }
+            t[i].surveice = CurrentWaiter;
+            CurrentTable = &(t[i]);
+            waiterdialogflag=1;
+            we.fresh();
+            we.show();
+        }
+        else{
+            w.fresh();
+            w.show();
+        }
     }
     else if(xxx ==2){
        l.show();
     }
     else if(xxx==3){
-        che.show();
+        che.reloaddata();
+        chefdialogflag= 1;
         che.fresh();
+        che.show();
+        che.savedata();
     }
     else if(xxx==4){
-        CurrentWaiter = &wa;
         wati.showui();
+        databaseflag=1;
         wati.show();
+        wati.exit();
     }
     else if(xxx==5){
         management.freshdata();
         management.show();
     }
+    else {
+        w.close();
+        QSqlDatabase::removeDatabase("QMYSQL");
+    }
+    qDebug() <<"finish";
     return a.exec();
 }

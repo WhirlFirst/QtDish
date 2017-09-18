@@ -14,7 +14,7 @@ class WaitDialog : public QDialog
 public:
     explicit WaitDialog(QWidget *parent = 0);
     ~WaitDialog();
-
+    void fresh();
 private slots:
     void on_exitbtn_clicked();
     void on_Dishviewbtn_clicked();

@@ -35,19 +35,12 @@ void LoginDialog::on_commandLinkBtn_clicked()
 
 void LoginDialog::on_loginBtn_clicked()
 {
-    string name = ui->usrLineEdit->text().toStdString();
-    string pwd = ui->pwdLineEdit->text().toStdString();
+    QString name = ui->usrLineEdit->text();
+    QString pwd = ui->pwdLineEdit->text();
     ww.u.reset();
     int k=0;
     if(name == "whirl"&&pwd == "1"){
         done(2);
-    }
-    else if(name == "chef"&&pwd == "1"){
-        CurrentChef = new Chef("chef","1",0,0,0);
-        done(3);
-    }
-    else if(name == "waiter"&&pwd =="1"){
-        done(4);
     }
     else if(name == "manager"&&pwd =="1"){
         done(5);
@@ -58,16 +51,39 @@ void LoginDialog::on_loginBtn_clicked()
             if(tem->showName() == name&&tem->checkpwd() == pwd){
                 CurrentUser = tem;
                k++;
+               done(1);
             }
         }
-        if(k>0) {
-           done(1);
+        ChefMap::iterator it;
+        for(it = ww.chefmap.begin();it!= ww.chefmap.end();it++){
+            if(it.value().showname() == name&&it.value().showpwd() == pwd){
+                CurrentChef = &(it.value());
+                k++;
+                done(3);
+            }
         }
-        else{
+        WaiterMap::iterator ie;
+        for(ie = ww.waitermap.begin();ie!= ww.waitermap.end();ie++){
+            if(QString::fromStdString(ie.value().showName()) == name&&ie.value().showPwd() == pwd){
+                CurrentWaiter = &(ie.value());
+                k++;
+                done(4);
+            }
+        }
+        if(k<=0){
             QMessageBox::warning(this, tr("警告！"),tr("用户名或密码错误！"),QMessageBox::Yes);
             ui->usrLineEdit->clear();
             ui->pwdLineEdit->clear();
             ui->usrLineEdit->setFocus();
         }
     }
+//    ChefMap::iterator it;
+//    for(it = ww.chefmap.begin();it!= ww.chefmap.end();it++){
+//        if(it.value().showname() ==)
+//    }
+}
+
+void LoginDialog::on_exitBtn_clicked()
+{
+   close();
 }

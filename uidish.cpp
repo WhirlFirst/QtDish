@@ -21,7 +21,7 @@ UiDish::~UiDish()
 
 void UiDish::setDish(Dish *dp){
     d=dp;
-    number = CurrentTable->searchDish(dp->showName());
+    number = 0;
     ui->numberlabel->setText(QString::number(number).append("份"));
     ui->ratinglabel->setText(QString::number(dp->showScore()).append("分"));
     if(number!=0) ui->cancelButton->setEnabled(true);
@@ -36,8 +36,8 @@ void UiDish::on_pushButton_clicked()
     ui->cancelButton->setEnabled(true);
 }
 
-void UiDish::setlabel(string n){
-    ui->label->setText(QString::fromStdString(n));
+void UiDish::setlabel(QString n){
+    ui->label->setText(n);
 }
 
 void UiDish::setprice(int pri){

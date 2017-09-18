@@ -18,8 +18,13 @@ URatingDish::~URatingDish()
 }
 
 void URatingDish::setDish(Dish* dp){
-    s = dp;
-    ui->Dishlabel->setText(QString::fromStdString(dp->showName()));
+    ww.menu.reset();
+    for(int i=0;i<ww.menu.size();i++){
+        Dish *a = ww.menu.showSingle();
+        if(dp->showName() == a->showName())
+            s=a;
+    }
+    ui->Dishlabel->setText(dp->showName());
 }
 
 void URatingDish::on_btn1_clicked()

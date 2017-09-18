@@ -15,9 +15,9 @@ addUserDialog::~addUserDialog()
 
 void addUserDialog::on_pushButton_clicked()
 {
-    string number = ui->phonelineEdit->text().toStdString();
-    string uname = ui->userlineEdit->text().toStdString();
-    string pw = ui->pwdlineEdit->text().toStdString();
+    QString number = ui->phonelineEdit->text();
+    QString uname = ui->userlineEdit->text();
+    QString pw = ui->pwdlineEdit->text();
     ww.u.insert(User(uname,number,pw));
     close();
 }

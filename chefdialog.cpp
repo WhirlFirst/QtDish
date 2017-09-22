@@ -14,10 +14,6 @@ chefDialog::chefDialog(QWidget *parent) :
     ui(new Ui::chefDialog)
 {
     ui->setupUi(this);
-
-    //qDebug()<<QString::number(CurrentChef->showdishnumber());
-    //ui->numberlabel->setText(QString::number(CurrentChef->shownumber()));
-    //CurrentChef->showdishnumber();
 }
 
 chefDialog::~chefDialog()
@@ -29,7 +25,8 @@ chefDialog::~chefDialog()
             t[r].reset();
             for(int i=0;i<t[r].size();i++){
                 Dish* o = t[r].showSingle();
-                query.prepare(QString("insert into dish%1 (name,price,status,score)""values(?,?,?,?)").arg(r));
+                query.prepare(QString("insert into dish%1 (number,name,price,status,score)""values(?,?,?,?,?)").arg(r));
+                query.addBindValue(QString::number(i));
                 query.addBindValue(o->showName());
                 query.addBindValue(QString::number(o->showPrice()));
                 query.addBindValue(o->showStatus());
@@ -37,23 +34,19 @@ chefDialog::~chefDialog()
                 query.exec();
             }
         }
-        QMap<int,string>::iterator iit;
-        if(CurrentWaiter !=0){
-
-            for(iit = CurrentWaiter->dm.begin();iit!= CurrentWaiter->dm.end();iit++){
-                query.prepare("select * from message? order by number desc limit 1");
-                query.addBindValue(QString::number(iit.key()).toInt());
-                query.exec();
-                while(query.next()){
-                    messageflag = query.value(0).toInt();
-                }
-                qDebug()<<QString::fromStdString(iit.value());
-                query.prepare("insert into message? (number,thing) values(?,?)");
-                query.addBindValue(QString::number(iit.key()).toInt());
-                query.addBindValue(QString::number(messageflag));
-                query.addBindValue(QString::fromStdString(iit.value()));
-                query.exec();
-                messageflag++;
+        QMap<string,int>::iterator iit;
+        for(int r=0;r<30;r++){
+            int x=0;
+            if(t[r].surveice!=0){
+                qDebug()<<"in";
+                for(iit = t[r].surveice->dm.begin();iit!= t[r].surveice->dm.end();iit++){
+                    query.prepare("insert into chefmessage? (number,name) values(?,?)");
+                    query.addBindValue(QString::number(iit.value()).toInt());
+                    query.addBindValue(QString::number(x));
+                    query.addBindValue(QString::fromStdString(iit.key()));
+                    query.exec();
+                    x++;
+                    }
             }
         }
     }
@@ -69,37 +62,48 @@ void chefDialog::on_startbtn_clicked()
        int r =s->item(row1,1)->text().toInt();
        CurrentChef->settablenumber(r);
        t[r].reset();
-       s->item(row1,1)->setBackgroundColor(QColor(0,60,10));
        QString nam = s->item(row1,0)->text();
+       if(t[r].surveice!=0)
+       {
+
+           CurrentWaiter = t[r].surveice;
+            qDebug()<<"got survice";
+       }
        for(int e = 0;e<t[r].size();e++){
            Dish* g =t[r].showSingle();
           if( g->showName()== nam&&g->showStatus()=="Onqueue"){
             CurrentChef->startworking(g);
+            break;
           }
 
        }
+       s->clearContents();
+       s->setRowCount(1);
+       s->setItem(0,0,new QTableWidgetItem(nam));
+       s->setItem(0,1,new QTableWidgetItem(QString::number(r)));
     }
 }
 
 void chefDialog::on_finishbtn_clicked()
 {
-    QTableWidget* s = ui->tableWidget;
-    int row1 =-1;
-    row1 = s->currentRow();
-    if(row1>=0){
+        QTableWidget* s = ui->tableWidget;
        emit CurrentChef->finishworking();
-        int q=s->item(row1,1)->text().toInt();
+        int q=s->item(0,1)->text().toInt();
        CurrentWaiter = t[q].surveice;
-       qDebug()<<QString::number(q)<<QString::fromStdString(CurrentWaiter->showName());
-       CurrentWaiter->dm.insert(q,CurrentChef->cookingDish->showName().toStdString());
-    }
+       if(CurrentWaiter!=0)
+            t[q].surveice->dm.insert(CurrentChef->cookingDish->showName().toStdString(),q);
        QMessageBox::information(this,tr("厉害"),tr("平均用时：").append(QString::number(CurrentChef->showtime()).append(tr("s"))),QMessageBox::Yes);
        ui->numberlabel->setText(QString::number(CurrentChef->showdishnumber()));
        int u=0;
        int y=0;
        s->clearContents();
        for(int i =0;i<30;i++){
-           y+= t[i].size();
+           t[i].reset();
+           for(int x=0;x<t[i].size();x++){
+               Dish* temp = t[i].showSingle();
+               if(temp->showStatus() == "Onqueue")
+                   y++;
+           }
        }
        s->setRowCount(y);
        for(int i=0;i<30;i++){
@@ -125,14 +129,14 @@ void chefDialog::reloaddata(){
     for(int i=0;i<30;i++){
         query.exec(QString("select * from dish%1").arg(i));
         while (query.next()) {
-            QString value0 = query.value(0).toString();
-            QString value1 = query.value(1).toString();
-            QString sta = query.value(2).toString();
+            QString value0 = query.value(1).toString();
+            QString value1 = query.value(2).toString();
+            QString sta = query.value(3).toString();
             Status e;
             if(sta =="Onqueue") e = Onqueue;
             else if(sta =="Cooking") e = Cooking;
             else if(sta =="Finshed") e = Finshed;
-            float sco = query.value(3).toFloat();
+            float sco = query.value(4).toFloat();
             t[i].initdish(Dish(value1.toInt(),value0,sco,e));
         }
     }
@@ -146,16 +150,20 @@ void chefDialog::reloaddata(){
         if(wawa!=0){
             qDebug()<<wawa;
             if(QString::fromStdString(m.value().showName())==wawa)
-                CurrentWaiter = &m.value();
+                t[j].surveice = &m.value();
         }
-        t[j].surveice = CurrentWaiter;
     }
     QStringList headers;
     QTableWidget* s = ui->tableWidget;
     s->setColumnCount(2);
     int y =0;
     for(int i =0;i<30;i++){
-        y+= t[i].size();
+        t[i].reset();
+        for(int x=0;x<t[i].size();x++){
+            Dish* temp = t[i].showSingle();
+            if(temp->showStatus() == "Onqueue")
+                y++;
+        }
     }
     s->setRowCount(y);
     headers << "菜名" << "桌号";

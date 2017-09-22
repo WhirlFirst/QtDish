@@ -29,7 +29,7 @@ public:
     void addCost(int x);
     void reduceCost(int x);
     friend class SuperUser;
-    float showCost();
+    QString showCost();
     QString showName();
     friend class UQueue;
     QString checknumber();
@@ -38,7 +38,7 @@ private:
     QString name;
     QString number;
     QString pwd;
-    int cost;
+    double cost;
 };
 
 class Dish
@@ -56,6 +56,7 @@ private:
     QString DishName;
     float score;
     int price;
+    int num ;
 };
 
 class Chef{
@@ -416,7 +417,7 @@ public:
     string showName() const;
     QString showPwd();
     float showscore();
-    QMap<int,string> dm;
+    QMap<string,int> dm;
     QMap<string,string> cm;
     int acount;
 private:

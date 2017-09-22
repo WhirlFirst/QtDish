@@ -70,9 +70,9 @@ void waiterDialog::showui(){
     for(int i=0;i<30;i++){
         query.exec(QString("select * from dish%1").arg(i));
         while (query.next()) {
-            QString value0 = query.value(0).toString();
-            QString value1 = query.value(1).toString();
-            QString sta = query.value(2).toString();
+            QString value0 = query.value(1).toString();
+            QString value1 = query.value(2).toString();
+            QString sta = query.value(3).toString();
             Status e;
             if(sta =="Onqueue") e = Onqueue;
             else if(sta =="Cooking") e = Cooking;
@@ -86,9 +86,16 @@ void waiterDialog::showui(){
             query.exec(QString("select * from message%1").arg(i));
             while (query.next()) {
                 string msg = query.value(1).toString().toStdString();
-                t[i].surveice->dm.insert(i,msg);
+                t[i].surveice->cm.insert(QString::number(i).toStdString(),msg);
             }
             query.exec(QString("delete from message%1").arg(i));
+
+            query.exec(QString("select * from chefmessage%1").arg(i));
+            while (query.next()) {
+                string msg = query.value(1).toString().toStdString();
+                t[i].surveice->dm.insert(msg,i);
+            }
+            query.exec(QString("delete from chefmessage%1").arg(i));
         }
     }
     QGridLayout *layout = ui->gridLayout;
@@ -124,9 +131,9 @@ void waiterDialog::tablefresh(){
         QMessageBox::information(this, tr("提示"),QString::fromStdString(iit.key()).append(tr("号桌:")).append(QString::fromStdString(iit.value())),QMessageBox::Yes);
         CurrentWaiter->cm.remove(iit.key());
     }
-    QMap<int,string>::iterator it;
+    QMap<string,int>::iterator it;
     for(it = CurrentWaiter->dm.begin();it!= CurrentWaiter->dm.end();it++){
-        QMessageBox::information(this, tr("提示"),QString::number(it.key()).append(tr("号桌:")).append(QString::fromStdString(it.value())),QMessageBox::Yes);
+        QMessageBox::information(this, tr("提示"),QString::number(it.value()).append(tr("号桌:")).append(QString::fromStdString(it.key()).append(tr("做好啦"))),QMessageBox::Yes);
         CurrentWaiter->dm.remove(it.key());
     }
     ui->tablenumber->setText(QString::number(CurrentWaiter->acount).append(tr("桌")));

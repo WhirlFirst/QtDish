@@ -17,8 +17,6 @@ int main(int argc, char *argv[])
     if (!createConnection())
                 return 1;
     Waiter wa;
-    wa.cm.insert("5","加水");
-    wa.dm.insert(5,"土豆丝");
     for(int i=0;i<30;i++){
         t[i].init(i);
     }
@@ -101,10 +99,7 @@ int main(int argc, char *argv[])
             }
         }
     }
-    User p("test","1","1");
     CurrentManager = new Manager;
-    CurrentManager->cheflist.insertRear(Chef("chef1","2",30,4.7,7.3));
-    CurrentManager->waiterlist.insert(QString::fromStdString(wa.showName()),wa);
     LoginDialog ldl;
     MainWindow w;
     SuperUserDialog l;
@@ -128,10 +123,10 @@ int main(int argc, char *argv[])
         WaiterMap::iterator m =  ww.waitermap.find(wawa);
         query.exec(QString("select * from dish%1").arg(i));
         while (query.next()) {
-            QString name = query.value(0).toString();
-            int pri = query.value(1).toInt();
-            QString sta = query.value(2).toString();
-            float scor = query.value(3).toFloat();
+            QString name = query.value(1).toString();
+            int pri = query.value(2).toInt();
+            QString sta = query.value(3).toString();
+            float scor = query.value(4).toFloat();
             Status e;
             if(sta =="Onqueue") e = Onqueue;
             else if(sta =="Cooking") e = Cooking;

@@ -25,11 +25,12 @@ static bool createConnection()
     query.exec("create table chef (name varchar(20) primary key,""pwd varchar(20),""averagetime float,""averagescore float,""dishnumber float)");
     query.exec("create table waiter (name varchar(20) primary key,"" pwd varchar(20)," "score float,""acount int)");
     for(int i=0;i<30;i++){
-        query.exec(QString("create table dish%1 (name varchar(20) primary key,price int,status varchar(15),score float)").arg(i));
+        query.exec(QString("create table dish%1 (number int primary key,name varchar(20),price int,status varchar(15),score float)").arg(i));
     }
     query.exec("create table ttable (number int primary key,"" name varchar(20)," "status varchar(20),waiter varchar(20))");
     for(int i=0;i<30;i++){
         query.exec(QString("create table message%1 (number int primary key,thing varchar(30))").arg(i));
+        query.exec(QString("create table chefmessage%1 (number int primary key,name varchar(30))").arg(i));
     }
     return true;
 }

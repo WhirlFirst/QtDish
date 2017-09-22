@@ -109,18 +109,23 @@
     <string>0</string>
    </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>580</x>
+     <x>560</x>
      <y>50</y>
-     <width>161</width>
+     <width>181</width>
      <height>41</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
      <widget class="QLabel" name="label_2">
+      <property name="font">
+       <font>
+        <family>Algerian</family>
+       </font>
+      </property>
       <property name="text">
        <string>Welcome:</string>
       </property>
@@ -128,6 +133,11 @@
     </item>
     <item>
      <widget class="QLabel" name="namelabel">
+      <property name="font">
+       <font>
+        <family>Algerian</family>
+       </font>
+      </property>
       <property name="text">
        <string>no data</string>
       </property>

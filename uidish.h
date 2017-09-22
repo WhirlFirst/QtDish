@@ -28,11 +28,11 @@ private slots:
     void on_pushButton_clicked();
 
     void on_cancelButton_clicked();
-
+    void fresh();
 private:
     Ui::UiDish *ui;
 
-    int number;
+    double number;
 };
 
 #endif // UIDISH_H

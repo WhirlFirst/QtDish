@@ -6,8 +6,8 @@ void User::addCost(int x) {
 void User::reduceCost(int x) {
     cost = cost-x;
 }
-float User::showCost() {
-    return cost;
+QString User::showCost() {
+    return QString::number(cost);
 }
 QString User::showName(){
     return name;

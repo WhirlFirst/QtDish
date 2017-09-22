@@ -10,6 +10,18 @@
     <height>295</height>
    </rect>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>439</width>
+    <height>295</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>439</width>
+    <height>295</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>注册</string>
   </property>

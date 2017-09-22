@@ -17,7 +17,7 @@ PayDialog::PayDialog(QWidget *parent) :
     QStringListModel* model = new QStringListModel(this);
     model->setStringList(data);
     ui->DishlistView->setModel(model);
-    ui->costlabel->setText(QString::number(CurrentUser->showCost()).append(tr("元")));
+    ui->costlabel->setText(CurrentUser->showCost().append(tr("元")));
 }
 
 PayDialog::~PayDialog()
@@ -38,8 +38,8 @@ void PayDialog::on_pushButton_clicked()
     query.exec(QString("delete from dish%1").arg(QString::fromStdString(CurrentTable->showNumber()).toInt()));
     for(int i=0;i<CurrentTable->size();i++){
         Dish* o = CurrentTable->showSingle();
-        qDebug()<<x;
-        query.prepare(QString("insert into dish%1 (name,price,status,score)""values(?,?,?,?)").arg(x));
+        query.prepare(QString("insert into dish%1 (number,name,price,status,score)""values(?,?,?,?,?)").arg(x));
+        query.addBindValue(QString::number(i));
         query.addBindValue(o->showName());
         query.addBindValue(QString::number(o->showPrice()));
         query.addBindValue(o->showStatus());

@@ -51,9 +51,11 @@ void WaitDialog::on_servicebtn_clicked()
 {
     int y = QString::fromStdString(CurrentTable->showNumber()).toInt();
     Waiter* s = t[y].surveice;
-    WaiterMap::iterator iu = ww.waitermap.find(QString::fromStdString(s->showName()));
-    string r = "backon";
-    iu.value().cm.insert(CurrentTable->showNumber(),r);
+    if(s!=0){
+        WaiterMap::iterator iu = ww.waitermap.find(QString::fromStdString(s->showName()));
+        string r = "backon";
+        iu.value().cm.insert(CurrentTable->showNumber(),r);
+    }
 }
 
 void WaitDialog::on_btn1_clicked()
@@ -84,7 +86,7 @@ void WaitDialog::on_btn5_clicked()
 void WaitDialog::on_exitbtn_clicked()
 {
     QSqlQuery query;
-    CurrentWaiter->rating(rat);
+    if(CurrentWaiter!=0) CurrentWaiter->rating(rat);
     int x = QString::fromStdString(CurrentTable->showNumber()).toInt();
     query.exec(QString("delete from dish%1").arg(QString::fromStdString(CurrentTable->showNumber()).toInt()));
     query.exec(QString("delete from ttable where number = %1").arg(x));
@@ -98,7 +100,24 @@ void WaitDialog::fresh(){
     }
     CurrentTable->reset();
     for(int r=0;r<CurrentTable->size();r++){
-        urdish[r]->setDish(CurrentTable->showSingle());
+        Dish*temp = CurrentTable->showSingle();
+        int fl=0;
+        for(int x=0;x<8;x++){
+            if(urdish[x]->s!=0){
+                if(urdish[x]->s->showName()==temp->showName())
+                    fl=1;
+            }
+        }
+        if(fl==0){
+            for(int q=0;q<8;q++){
+                if(urdish[q]->s==0){
+
+                    urdish[q]->setDish(temp);
+                    break;
+                }
+            }
+        }
+
     }
     int x=0;
     for(int q=0;q<2;q++){

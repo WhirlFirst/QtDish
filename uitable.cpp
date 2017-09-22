@@ -24,7 +24,6 @@ void Uitable::settext(string ss){
 }
 
 void Uitable::disable(){
-    ui->pushButton->setStyleSheet("background-color:grey");
     ui->pushButton->setEnabled(false);
 }
 

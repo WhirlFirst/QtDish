@@ -2,7 +2,6 @@
 #include "ui_uidish.h"
 #include "QString"
 #include "logic.h"
-#include "QDebug"
 using namespace std;
 UiDish::UiDish(QWidget *parent) :
     QWidget(parent),
@@ -12,6 +11,7 @@ UiDish::UiDish(QWidget *parent) :
     ui->pushButton->setText(tr("想吃🤤"));
     ui->cancelButton->setEnabled(false);
     d = 0;
+    connect(this,SIGNAL(newdish()),this,SLOT(fresh()));
 }
 
 UiDish::~UiDish()
@@ -19,11 +19,16 @@ UiDish::~UiDish()
     delete ui;
 }
 
+void UiDish::fresh(){
+    ui->numberlabel->setText(tr("0"));
+    ui->numberlabel->setText(QString::number(number));
+}
+
 void UiDish::setDish(Dish *dp){
     d=dp;
     number = 0;
-    ui->numberlabel->setText(QString::number(number).append("份"));
-    ui->ratinglabel->setText(QString::number(dp->showScore()).append("分"));
+    ui->numberlabel->setText(QString::number(number));
+    ui->ratinglabel->setText(QString::number(dp->showScore(),'f',1).append("分"));
     if(number!=0) ui->cancelButton->setEnabled(true);
 }
 
@@ -31,7 +36,6 @@ void UiDish::on_pushButton_clicked()
 {
     CurrentTable->addDish(*d);
     number++;
-    ui->numberlabel->setText(QString::number(number).append("份"));
     emit newdish();
     ui->cancelButton->setEnabled(true);
 }
@@ -60,7 +64,6 @@ void UiDish::on_cancelButton_clicked()
 {
     CurrentTable->deleteDish(*d);
     number--;
-    ui->numberlabel->setText(QString::number(number).append("份"));
     if(number == 0) ui->cancelButton->setEnabled(false);
     emit newdish();
 }

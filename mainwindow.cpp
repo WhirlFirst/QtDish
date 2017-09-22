@@ -41,7 +41,7 @@ void MainWindow::fresh(){
 }
 
 void MainWindow::moneyfresh(){
-    ui->moneylabel->setText(QString::number(CurrentUser->showCost()).append(tr("元")));
+    ui->moneylabel->setText(CurrentUser->showCost().append(tr("元")));
 }
 
 MainWindow::~MainWindow()
@@ -60,10 +60,11 @@ int flag=0;
 
 
 void MainWindow::tablefresh(){
+
     for(int i=0;i<30;i++){
+        utable[i]->disable();
         if(utable[i]->tp->showStatus()== "Full") {
             utable[i]->setStyleSheet("background-color:grey;");
-            utable[i]->disable();
         }
     }
     flag =2;
@@ -112,7 +113,13 @@ void MainWindow::on_sTableBtn_clicked()
             connect(utable[i],SIGNAL(select()),this,SLOT(tablefresh()));
             connect(utable[i],SIGNAL(select()),this,SLOT(msg()));
          }
-        tablefresh();
+        for(int i=0;i<30;i++){
+            utable[i]->disable();
+            if(utable[i]->tp->showStatus()== "Full") {
+                utable[i]->setStyleSheet("background-color:grey;");
+
+            }
+        }
         int y=0;
         for(int p=0;p<10;p++){
             for(int k=0;k<3;k++){

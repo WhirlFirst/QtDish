@@ -77,13 +77,9 @@ void LoginDialog::on_loginBtn_clicked()
             ui->usrLineEdit->setFocus();
         }
     }
-//    ChefMap::iterator it;
-//    for(it = ww.chefmap.begin();it!= ww.chefmap.end();it++){
-//        if(it.value().showname() ==)
-//    }
 }
 
 void LoginDialog::on_exitBtn_clicked()
 {
-   close();
+   exit(0);
 }

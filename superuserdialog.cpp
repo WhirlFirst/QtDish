@@ -74,6 +74,8 @@ SuperUserDialog::~SuperUserDialog()
 
 
 void SuperUserDialog::menushow(){
+     ui->deletebtn_2->show();
+    ui->Searchline->setPlaceholderText(tr("请输入菜名"));
     QStringList headers;
     QTableWidget* s = ui->tableWidget;
     s->clear();
@@ -81,7 +83,7 @@ void SuperUserDialog::menushow(){
     s->setRowCount(ww.menu.size());
     headers << "菜名" << "价格"<<"评分";
     s->setHorizontalHeaderLabels(headers);
-    s->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    //s->setEditTriggers(QAbstractItemView::NoEditTriggers);
     s->setSelectionBehavior(QAbstractItemView::SelectRows);
     s->setShowGrid(true);
     s->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
@@ -217,6 +219,7 @@ void SuperUserDialog::on_pushButton_clicked()
 
 void SuperUserDialog::on_userbtn_clicked()
 {
+    ui->deletebtn_2->show();
     ui->Searchline->setPlaceholderText(tr("请输入手机号"));
     QStringList headers;
     QTableWidget* s = ui->tableWidget;
@@ -225,7 +228,7 @@ void SuperUserDialog::on_userbtn_clicked()
     s->setRowCount(ww.u.size());
     headers << "手机号" << "用户名"<<"密码";
     s->setHorizontalHeaderLabels(headers);
-    s->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    //s->setEditTriggers(QAbstractItemView::NoEditTriggers);
     s->setSelectionBehavior(QAbstractItemView::SelectRows);
     s->setShowGrid(true);
     s->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
@@ -243,6 +246,7 @@ void SuperUserDialog::on_userbtn_clicked()
 
 void SuperUserDialog::on_chiefbtn_clicked()
 {
+    ui->deletebtn_2->hide();
     ui->Searchline->setPlaceholderText(tr("请输入厨师姓名"));
     QStringList headers;
     QTableWidget* s = ui->tableWidget;
@@ -269,6 +273,7 @@ void SuperUserDialog::on_chiefbtn_clicked()
 
 void SuperUserDialog::on_waiterbtn_clicked()
 {
+    ui->deletebtn_2->hide();
     ui->Searchline->setPlaceholderText(tr("请输入服务员姓名"));
     QStringList headers;
     QTableWidget* s = ui->tableWidget;
@@ -291,4 +296,31 @@ void SuperUserDialog::on_waiterbtn_clicked()
     }
     s->show();
     st=4;
+}
+
+void SuperUserDialog::on_deletebtn_2_clicked()
+{
+
+    QTableWidget* s = ui->tableWidget;
+    int u = s->rowCount();
+    if(st==1){
+        ww.menu.clear();
+        for(int i=0;i<u;i++){
+           QString name= s->item(i,0)->text();
+            QString price = s->item(i,1)->text();
+           QString score = s->item(i,2)->text();
+           ww.menu.insert(Dish(price.toInt(),name,score.toFloat()));
+        }
+    }
+    else if(st==2){
+        ww.u.clear();
+        int us = s->rowCount();
+        for(int i=0;i<us;i++){
+           QString number= s->item(i,0)->text();
+            QString name = s->item(i,1)->text();
+           QString pw = s->item(i,2)->text();
+           ww.u.insert(User(name,number,pw));
+        }
+    }
+
 }

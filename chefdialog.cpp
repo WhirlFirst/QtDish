@@ -71,7 +71,7 @@ void chefDialog::on_startbtn_clicked()
        }
        for(int e = 0;e<t[r].size();e++){
            Dish* g =t[r].showSingle();
-          if( g->showName()== nam&&g->showStatus()=="Onqueue"){
+          if( g->showName()== nam&&g->showStatus()!="Finshed"){
             CurrentChef->startworking(g);
             break;
           }
@@ -101,7 +101,7 @@ void chefDialog::on_finishbtn_clicked()
            t[i].reset();
            for(int x=0;x<t[i].size();x++){
                Dish* temp = t[i].showSingle();
-               if(temp->showStatus() == "Onqueue")
+               if(temp->showStatus() != "Finshed")
                    y++;
            }
        }
@@ -110,7 +110,7 @@ void chefDialog::on_finishbtn_clicked()
            t[i].reset();
            for(int x=0;x<t[i].size();x++){
                Dish* o = t[i].showSingle();
-               if(o->showStatus()=="Onqueue"){
+               if(o->showStatus()!="Finshed"){
                    s->setItem(u,0,new QTableWidgetItem(o->showName()));
                    s->setItem(u,1,new QTableWidgetItem(QString::number(i)));
                    u++;
@@ -161,7 +161,7 @@ void chefDialog::reloaddata(){
         t[i].reset();
         for(int x=0;x<t[i].size();x++){
             Dish* temp = t[i].showSingle();
-            if(temp->showStatus() == "Onqueue")
+            if(temp->showStatus() != "Finshed")
                 y++;
         }
     }
@@ -178,7 +178,7 @@ void chefDialog::reloaddata(){
         t[i].reset();
         for(int x=0;x<t[i].size();x++){
             Dish* o = t[i].showSingle();
-            if(o->showStatus()=="Onqueue"){
+            if(o->showStatus()!="Finshed"){
                 s->setItem(u,0,new QTableWidgetItem(o->showName()));
                 s->setItem(u,1,new QTableWidgetItem(QString::number(i)));
                 u++;

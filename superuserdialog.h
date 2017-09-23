@@ -31,6 +31,8 @@ private slots:
 
     void on_waiterbtn_clicked();
 
+    void on_deletebtn_2_clicked();
+
 private:
     Ui::SuperUserDialog *ui;
     int st;

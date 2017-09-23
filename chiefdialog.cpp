@@ -37,7 +37,7 @@ void chiefDialog::freshdata(){
     int i=0;
     for(cd = ww.chefmap.begin();cd!= ww.chefmap.end();cd++){
         s->setItem(i,0,new QTableWidgetItem(cd.value().showname()));
-        s->setItem(i,1,new QTableWidgetItem(cd.value().showtime()));
+        s->setItem(i,1,new QTableWidgetItem(QString::number(cd.value().showtime())));
         s->setItem(i,2,new QTableWidgetItem(QString::number(cd.value().showscore())));
         i++;
     }
